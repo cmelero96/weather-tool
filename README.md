@@ -1,5 +1,5 @@
 # Technical Front End Developer Assingment
-If you made it all the way here, congratulations! A new challenge has arrived though. 💪🏼
+If you made it all the way here, congratulations! A new challenge has arrived though. 💪
 
 Time for a technical assignment! Take as much time as you need to deliver your solution (while being reasonable). For any further questions, contact your Interviewer.
 
@@ -18,13 +18,14 @@ Time for a technical assignment! Take as much time as you need to deliver your s
   + Current temperature
   + Today's high temperature
   + Today's low temperature
-+ Add extra info about the current conditions on a hidden component the user can toggle the visibility
++ Add extra info about the current conditions on a hidden component the user can toggle the visibility:
     + Wind Speed
     + Humidity
     + Pressure
     + Sunrise/Sunset Time
 + Show basic weather info for the next 7 days on that location
 + Show basic weather info for the last 30 days on that location
++ If there's a need to make a big number of requests, make them concurrent
 
 ## Bonus Round:
 __Was this too easy?__
