@@ -23,6 +23,7 @@ Time for a technical assignment! Take as much time as you need to deliver your s
     + Humidity
     + Pressure
     + Sunrise/Sunset Time
++ Show basic weather info for the next 7 days on that location
 + Show basic weather info for the last 30 days on that location
 
 ## Bonus Round:
