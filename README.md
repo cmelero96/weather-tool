@@ -1,7 +1,7 @@
 # Technical Front End Developer Assingment
 If you made it all the way here, congratulations! A new challenge has arrived though. 💪
 
-Time for a technical assignment! Take as much time as you need to deliver your solution (while being reasonable). For any further questions, contact your Interviewer.
+Time for a technical assignment! Take as much time as you need to deliver your solution, while being reasonable. Please let us know if there are any unexpected delays or reasons why you can't take the test at this time. For any further questions, contact us via you HR contact at our company.
 
 ## Instructions
 + Clone this repo
