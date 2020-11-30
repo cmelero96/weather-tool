@@ -7,7 +7,7 @@ Time for a technical assignment! Take as much time as you need to deliver your s
 + Clone this repo
 + Complete this exercise and submit either a zip of the solution or a link to a new repo
 + Please target the latest stable release of Vue.js
-+ Use the [Darksky API](https://darksky.net/dev) for weather data
++ Use the [OpenWeatherMap API](https://openweathermap.org/api) for weather data
 
 ## Requirements
 + Solution should be responsive
