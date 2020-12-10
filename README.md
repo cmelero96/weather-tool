@@ -24,7 +24,7 @@ Time for a technical assignment! Take as much time as you need to deliver your s
     + Pressure
     + Sunrise/Sunset Time
 + Show basic weather info for the next 7 days on that location
-+ Show basic weather info for the last 30 days on that location
++ Show basic weather info for the last 5 days on that location
 + If there's a need to make a big number of requests, make them concurrent
 
 ## Bonus Round:
