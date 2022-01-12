@@ -1,4 +1,4 @@
-export const current = {
+export const mockCurrent = {
   location: 'Madrid',
   lat: 40.4165,
   lon: -3.7026,
@@ -14,7 +14,7 @@ export const current = {
   sunset: '2022-01-12T17:08:47.000Z',
 };
 
-export const forecast = [
+export const mockForecast = [
   {
     description: 'scattered clouds',
     icon: '03d',
@@ -66,7 +66,7 @@ export const forecast = [
   },
 ];
 
-export const history = [
+export const mockHistorical = [
   { description: 'clear sky', icon: '01d', temperature: 15.35 },
   { description: 'clear sky', icon: '01d', temperature: 14.73 },
   { description: 'scattered clouds', icon: '03d', temperature: 12.85 },

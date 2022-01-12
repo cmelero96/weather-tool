@@ -1,42 +1,45 @@
 <template>
   <SearchBar></SearchBar>
   <br />
-  <div>{{ this.current }}</div>
+  <div>{{ weather.current }}</div>
   <br />
-  <div v-for="day in forecast" :key="day">
+  <div v-for="day in weather.forecast" :key="day">
     {{ day }}
   </div>
   <br />
-  <div v-for="day in historical" :key="day">
+  <div v-for="day in weather.historical" :key="day">
     {{ day }}
   </div>
 </template>
 
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
-import { current, forecast, history } from './assets/mockWeather';
+import { mockCurrent, mockForecast, mockHistorical } from './assets/mockWeather';
+import { ref, onMounted } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
 
 export default {
-  name: 'App',
   components: { SearchBar },
-  data() {
-    return {
-      current: null,
-      forecast: [],
-      historical: [],
-    };
-  },
-  async mounted() {
-    const coord = { lat: 40.4165, lon: -3.70256 };
-    // this.current = await getCurrentWeather(coord);
-    // this.forecast = await getForecast(coord);
-    // this.historical = await getWeatherHistory(coord);
+  setup() {
+    const weather = ref({});
+    const coord = ref({});
 
-    this.current = current;
-    this.forecast = forecast;
-    this.historical = history;
+    onMounted(async () => {
+      coord.value = { lat: 40.4165, lon: -3.70256 };
+      weather.value = {
+        current: mockCurrent,
+        forecast: mockForecast,
+        historical: mockHistorical,
+      };
+      // weather.value = {
+      // current: await getCurrentWeather(coord),
+      // forecast: await getForecast(coord),
+      // historical: await getWeatherHistory(coord)
+      // };
+    });
+
+    return { coord, weather };
   },
 };
 </script>

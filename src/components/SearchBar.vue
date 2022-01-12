@@ -8,6 +8,7 @@
 <script>
 import ALL_CITIES from '../assets/history.city.list.json';
 import useSuggestions from '../composables/useSuggestions';
+import { ref } from 'vue';
 
 export default {
   setup() {
