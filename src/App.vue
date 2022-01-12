@@ -1,28 +1,74 @@
 <template>
-  <input type="text" />
+  <input type="text" ref="input" />
+  <button @click="search">Search</button>
+  <div v-for="item in searchResults" :key="item">
+    {{ item }}
+  </div>
   <div>{{ this.current }}</div>
-  <div>{{ this.past }}</div>
-  <div>{{ this.future }}</div>
+  <br />
+  <div v-for="day in forecast" :key="day">
+    {{ day }}
+  </div>
+  <br />
+  <div v-for="day in historical" :key="day">
+    {{ day }}
+  </div>
 </template>
 
 <script>
 // import { getWeatherData } from './services/apiCall';
 import fakeWeatherObject from './assets/fakeWeatherObject';
+import Fuse from 'fuse.js';
+
+import ALL_CITIES from './assets/history.city.list.json';
+const SEARCH_OPTIONS = {
+  threshold: 0.35,
+  keys: ['city.name'],
+};
 
 export default {
   name: 'App',
   data() {
     return {
       current: null,
-      past: null,
-      future: null,
+      forecast: [],
+      historical: [],
+      fuse: null,
+      searchResults: [],
     };
   },
   async mounted() {
     // this.current = await getWeatherData('madrid');
-    this.current = fakeWeatherObject;
+    this.current = fakeWeatherObject.current;
+    this.forecast = fakeWeatherObject.forecast;
+    this.historical = fakeWeatherObject.historical;
+
+    this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
   },
-  methods: {},
+  methods: {
+    search() {
+      const input = this.$refs.input.value;
+
+      const search = this.fuse
+        .search(input)
+        .slice(0, 10)
+        .map((city) => {
+          let id = city.item.id;
+          if (typeof id !== 'number') {
+            id = id['$numberLong'];
+          }
+          console.log(id);
+
+          return {
+            id,
+            name: city.item.city.name,
+            countryCode: city.item.city.country,
+          };
+        });
+
+      this.searchResults = search;
+    },
+  },
 };
 </script>
 
