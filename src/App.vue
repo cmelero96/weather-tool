@@ -1,6 +1,5 @@
 <template>
-  <input type="text" ref="input" />
-  <button @click="search">Search</button>
+  <input type="text" ref="input" v-model.lazy="searchTerm" v-debounce="300" />
   <div v-for="item in searchResults" :key="item">
     {{ item }}
   </div>
@@ -19,12 +18,23 @@
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
 import { current, forecast, history } from './assets/mockWeather';
 import Fuse from 'fuse.js';
+// import { debounce } from 'lodash';
 
 import ALL_CITIES from './assets/history.city.list.json';
 const SEARCH_OPTIONS = {
   threshold: 0.35,
   keys: ['city.name'],
 };
+
+// TODO: Find why lodash can't be used
+function debounce2(func, wait) {
+  let timeout;
+  return function (...args) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), wait);
+  };
+}
 
 export default {
   name: 'App',
@@ -35,6 +45,7 @@ export default {
       historical: [],
       fuse: null,
       searchResults: [],
+      searchTerm: '',
     };
   },
   async mounted() {
@@ -47,10 +58,21 @@ export default {
     this.forecast = forecast;
     this.historical = history;
 
-    // this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
+    this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
+  },
+  watch: {
+    searchTerm(n) {
+      this.displaySuggestions(n);
+    },
   },
   methods: {
-    search() {
+    update() {
+      console.log('hola');
+      debounce2(function (e) {
+        console.log(e.target.value);
+      }, 300);
+    },
+    displaySuggestions() {
       const input = this.$refs.input.value;
 
       const search = this.fuse
@@ -59,9 +81,8 @@ export default {
         .map((city) => {
           let id = city.item.id;
           if (typeof id !== 'number') {
-            id = id['$numberLong'];
+            id = Number(id['$numberLong']);
           }
-          console.log(id);
 
           return {
             id,
@@ -70,6 +91,7 @@ export default {
           };
         });
 
+      console.log(search);
       this.searchResults = search;
     },
   },
