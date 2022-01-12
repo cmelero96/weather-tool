@@ -1,6 +1,6 @@
 <template>
   <input type="text" v-model="searchTerm" />
-  <div v-for="item in searchResults" :key="item" class="country-option" @click="select(item)">
+  <div v-for="item in searchResults" :key="item" class="country-option" @click="selectCity(item)">
     {{ item }}
   </div>
 </template>
@@ -8,17 +8,18 @@
 <script>
 import ALL_CITIES from '../assets/history.city.list.json';
 import useSuggestions from '../composables/useSuggestions';
-import { ref } from 'vue';
 
 export default {
-  setup() {
+  emits: ['selectCity'],
+  setup(_, { emit }) {
     const { searchTerm, searchResults } = useSuggestions(ALL_CITIES);
 
-    const select = (item) => {
-      console.log(item);
+    const selectCity = (city) => {
+      console.log(city);
+      emit('selectCity', city);
     };
 
-    return { searchTerm, searchResults, select };
+    return { searchTerm, searchResults, selectCity };
   },
 };
 </script>

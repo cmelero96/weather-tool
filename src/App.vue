@@ -1,5 +1,5 @@
 <template>
-  <SearchBar></SearchBar>
+  <SearchBar @selectCity="updateCity"></SearchBar>
   <br />
   <CurrentWeather :city="city" :weather="weather.current"></CurrentWeather>
 
@@ -16,7 +16,7 @@
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
 import { mockCityData, mockCurrent, mockForecast, mockHistorical } from './assets/mockData';
-import { ref, onMounted, onUpdated } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
 import CurrentWeather from './components/CurrentWeather.vue';
@@ -29,21 +29,32 @@ export default {
     const city = ref({});
     const weather = ref({});
 
-    onMounted(async () => {
-      city.value = mockCityData;
+    const updateCity = (selectedCity) => (city.value = selectedCity);
+
+    watch(city, (newCity) => {
+      updateWeather(newCity.coord);
+    });
+
+    // Mocked functionality
+    onMounted(() => (city.value = mockCityData));
+    const updateWeather = () => {
       weather.value = {
         current: mockCurrent,
         forecast: mockForecast,
         historical: mockHistorical,
       };
-      // weather.value = {
-      //   current: await getCurrentWeather(coord.value),
-      //   forecast: await getForecast(coord.value),
-      //   historical: await getWeatherHistory(coord.value),
-      // };
-    });
+    };
 
-    return { city, weather };
+    // TODO: Uncomment this and remove mocked functionality above
+    // const updateWeather = async (coordinates) => {
+    //   weather.value = {
+    //     current: await getCurrentWeather(coordinates),
+    //     forecast: await getForecast(coordinates),
+    //     historical: await getWeatherHistory(coordinates),
+    //   };
+    // };
+
+    return { city, weather, updateCity };
   },
 };
 </script>
