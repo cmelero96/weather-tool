@@ -1,18 +1,17 @@
 import API_KEY from '../assets/api-key';
 
-export const getWeatherData = async (query) => {
-  const current = await getCurrentData(query);
-
-  const { dt, lat, lon } = current;
-
+export const getWeatherData = async ({ lat, lon }) => {
+  const current = await getCurrentData(lat, lon);
   const forecast = await getForecastData(lat, lon);
-  const historical = await getPastData(dt, lat, lon);
+  const historical = await getPastData(lat, lon);
 
   return { current, historical, forecast };
 };
 
-const getCurrentData = async (query) => {
-  const response = await callService(`https://api.openweathermap.org/data/2.5/weather?q=${query}`);
+const getCurrentData = async (lat, lon) => {
+  const response = await callService(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`
+  );
 
   const current = {
     location: response.name,
@@ -55,11 +54,11 @@ const getForecastData = async (lat, lon) => {
 };
 
 const getPastData = async (dt, lat, lon) => {
-  const dateNow = new Date(dt * 1000);
+  const timestampNow = new Date.getTime() / 1000;
   const oldTimestamps = [];
   for (let i = 0; i < 5; i++) {
-    const pastDate = new Date(dateNow.getTime());
-    pastDate.setDate(dateNow.getDate() - (i + 1));
+    const pastDate = new Date(timestampNow.getTime());
+    pastDate.setDate(timestampNow.getDate() - (i + 1));
 
     oldTimestamps.push(pastDate.getTime() / 1000);
   }
