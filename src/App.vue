@@ -1,8 +1,6 @@
 <template>
-  <input type="text" ref="input" v-model.lazy="searchTerm" v-debounce="300" />
-  <div v-for="item in searchResults" :key="item">
-    {{ item }}
-  </div>
+  <SearchBar></SearchBar>
+  <br />
   <div>{{ this.current }}</div>
   <br />
   <div v-for="day in forecast" :key="day">
@@ -17,24 +15,17 @@
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
 import { current, forecast, history } from './assets/mockWeather';
-import Fuse from 'fuse.js';
 
-import ALL_CITIES from './assets/history.city.list.json';
-const SEARCH_OPTIONS = {
-  threshold: 0.35,
-  keys: ['city.name'],
-};
+import SearchBar from './components/SearchBar.vue';
 
 export default {
   name: 'App',
+  components: { SearchBar },
   data() {
     return {
       current: null,
       forecast: [],
       historical: [],
-      fuse: null,
-      searchResults: [],
-      searchTerm: '',
     };
   },
   async mounted() {
@@ -46,36 +37,6 @@ export default {
     this.current = current;
     this.forecast = forecast;
     this.historical = history;
-
-    this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
-  },
-  watch: {
-    searchTerm(n) {
-      this.displaySuggestions(n);
-    },
-  },
-  methods: {
-    displaySuggestions() {
-      const input = this.$refs.input.value;
-
-      const search = this.fuse
-        .search(input)
-        .slice(0, 10)
-        .map((city) => {
-          let id = city.item.id;
-          if (typeof id !== 'number') {
-            id = Number(id['$numberLong']);
-          }
-
-          return {
-            id,
-            name: city.item.city.name,
-            countryCode: city.item.city.country,
-          };
-        });
-
-      this.searchResults = search;
-    },
   },
 };
 </script>
