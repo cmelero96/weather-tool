@@ -1,7 +1,8 @@
 <template>
   <SearchBar></SearchBar>
   <br />
-  <div>{{ weather.current }}</div>
+  <CurrentWeather :city="city" :weather="weather.current"></CurrentWeather>
+
   <br />
   <div v-for="day in weather.forecast" :key="day">
     {{ day }}
@@ -18,9 +19,10 @@ import { mockCityData, mockCurrent, mockForecast, mockHistorical } from './asset
 import { ref, onMounted } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
+import CurrentWeather from './components/CurrentWeather.vue';
 
 export default {
-  components: { SearchBar },
+  components: { SearchBar, CurrentWeather },
   setup() {
     const city = ref({});
     const weather = ref({});

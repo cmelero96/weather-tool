@@ -9,8 +9,7 @@ const SEARCH_OPTIONS = {
 
 export default (searchValues) => {
   // Create Fuse instance to perform fuzzy search
-  const fuse = ref();
-  onMounted(() => (fuse.value = new Fuse(searchValues, SEARCH_OPTIONS)));
+  const fuse = ref(new Fuse(searchValues, SEARCH_OPTIONS));
 
   // Create method to fuzzy search and handle the results
   const searchTerm = ref('');
