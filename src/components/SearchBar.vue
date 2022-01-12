@@ -1,11 +1,13 @@
 <template>
-  <input type="text" ref="input" v-model.lazy="searchTerm" v-debounce="300" />
-  <div v-for="item in searchResults" :key="item">
+  <input type="text" v-model="searchTerm" />
+  <div v-for="item in searchResults" :key="item" class="country-option" @click="select(item)">
     {{ item }}
   </div>
 </template>
 
 <script>
+import { onMounted, ref } from 'vue';
+import { debouncedWatch } from '@vueuse/core';
 import Fuse from 'fuse.js';
 import ALL_CITIES from '../assets/history.city.list.json';
 
@@ -15,27 +17,14 @@ const SEARCH_OPTIONS = {
 };
 
 export default {
-  data() {
-    return {
-      fuse: null,
-      searchResults: [],
-      searchTerm: '',
-    };
-  },
-  mounted() {
-    this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
-  },
-  watch: {
-    searchTerm(n) {
-      this.displaySuggestions(n);
-    },
-  },
-  methods: {
-    displaySuggestions() {
-      const input = this.$refs.input.value;
+  setup() {
+    const searchTerm = ref('');
+    const searchResults = ref([]);
+    const fuse = ref();
 
-      const search = this.fuse
-        .search(input)
+    const getSuggestions = () => {
+      const search = fuse.value
+        .search(searchTerm.value)
         .slice(0, 10)
         .map((city) => {
           let id = city.item.id;
@@ -50,9 +39,24 @@ export default {
             coord: city.item.city.coord,
           };
         });
+      return search;
+    };
 
-      this.searchResults = search;
-    },
+    const select = (item) => {
+      console.log(item);
+    };
+
+    onMounted(() => (fuse.value = new Fuse(ALL_CITIES, SEARCH_OPTIONS)));
+
+    debouncedWatch(
+      searchTerm,
+      () => {
+        searchResults.value = getSuggestions(searchTerm);
+      },
+      { debounce: 150 }
+    );
+
+    return { searchTerm, searchResults, select };
   },
 };
 </script>
