@@ -26,16 +26,6 @@ const SEARCH_OPTIONS = {
   keys: ['city.name'],
 };
 
-// TODO: Find why lodash can't be used
-function debounce2(func, wait) {
-  let timeout;
-  return function (...args) {
-    const context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(context, args), wait);
-  };
-}
-
 export default {
   name: 'App',
   data() {
@@ -66,12 +56,6 @@ export default {
     },
   },
   methods: {
-    update() {
-      console.log('hola');
-      debounce2(function (e) {
-        console.log(e.target.value);
-      }, 300);
-    },
     displaySuggestions() {
       const input = this.$refs.input.value;
 
@@ -91,7 +75,6 @@ export default {
           };
         });
 
-      console.log(search);
       this.searchResults = search;
     },
   },
