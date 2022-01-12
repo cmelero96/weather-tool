@@ -1,4 +1,4 @@
-export const currentWeather = {
+export const current = {
   location: 'Madrid',
   lat: 40.4165,
   lon: -3.7026,

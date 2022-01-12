@@ -17,7 +17,7 @@
 
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
-import fakeWeatherObject from './assets/fakeWeatherObject';
+import { current, forecast, history } from './assets/mockWeather';
 import Fuse from 'fuse.js';
 
 import ALL_CITIES from './assets/history.city.list.json';
@@ -39,13 +39,13 @@ export default {
   },
   async mounted() {
     const coord = { lat: 40.4165, lon: -3.70256 };
-    this.current = await getCurrentWeather(coord);
-    this.forecast = await getForecast(coord);
-    this.historical = await getWeatherHistory(coord);
+    // this.current = await getCurrentWeather(coord);
+    // this.forecast = await getForecast(coord);
+    // this.historical = await getWeatherHistory(coord);
 
-    // this.current = fakeWeatherObject.current;
-    // this.forecast = fakeWeatherObject.forecast;
-    // this.historical = fakeWeatherObject.historical;
+    this.current = current;
+    this.forecast = forecast;
+    this.historical = history;
 
     // this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
   },
