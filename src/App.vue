@@ -33,9 +33,9 @@ export default {
         historical: mockHistorical,
       };
       // weather.value = {
-      // current: await getCurrentWeather(coord),
-      // forecast: await getForecast(coord),
-      // historical: await getWeatherHistory(coord)
+      //   current: await getCurrentWeather(coord.value),
+      //   forecast: await getForecast(coord.value),
+      //   historical: await getWeatherHistory(coord.value),
       // };
     });
 
