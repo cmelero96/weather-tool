@@ -15,9 +15,6 @@ export const getCurrentWeather = async ({ lat, lon }) => {
   if (!response) return;
 
   return {
-    location: response.name,
-    lat: response.coord.lat,
-    lon: response.coord.lon,
     description: response.weather[0].description,
     icon: response.weather[0].icon,
     temperature: response.main.temp,

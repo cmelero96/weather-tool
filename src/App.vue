@@ -14,7 +14,7 @@
 
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
-import { mockCurrent, mockForecast, mockHistorical } from './assets/mockWeather';
+import { mockCityData, mockCurrent, mockForecast, mockHistorical } from './assets/mockData';
 import { ref, onMounted } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
@@ -22,11 +22,11 @@ import SearchBar from './components/SearchBar.vue';
 export default {
   components: { SearchBar },
   setup() {
+    const city = ref({});
     const weather = ref({});
-    const coord = ref({});
 
     onMounted(async () => {
-      coord.value = { lat: 40.4165, lon: -3.70256 };
+      city.value = mockCityData;
       weather.value = {
         current: mockCurrent,
         forecast: mockForecast,
@@ -39,7 +39,7 @@ export default {
       // };
     });
 
-    return { coord, weather };
+    return { city, weather };
   },
 };
 </script>

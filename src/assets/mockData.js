@@ -1,7 +1,11 @@
+export const mockCityData = {
+  id: 3117735,
+  name: 'Madrid',
+  countryCode: 'ES',
+  coord: { lon: -3.70256, lat: 40.4165 },
+};
+
 export const mockCurrent = {
-  location: 'Madrid',
-  lat: 40.4165,
-  lon: -3.7026,
   description: 'clear sky',
   icon: '01d',
   temperature: 11.56,
