@@ -1,19 +1,16 @@
 import API_KEY from '../assets/api-key';
 
-export const getWeatherData = async ({ lat, lon }) => {
-  const current = await getCurrentData(lat, lon);
-  const forecast = await getForecastData(lat, lon);
-  const historical = await getPastData(lat, lon);
+const DAYS_IN_HISTORY = 5;
+const DAYS_IN_FORECAST = 7;
 
-  return { current, historical, forecast };
-};
+export const getCurrentWeather = async ({ lat, lon }) => {
+  const response = await callService(`weather?lat=${lat}&lon=${lon}`)
+    .then((data) => data)
+    .catch((e) => console.log(e));
 
-const getCurrentData = async (lat, lon) => {
-  const response = await callService(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}`
-  );
+  if (!response) return;
 
-  const current = {
+  return {
     location: response.name,
     lat: response.coord.lat,
     lon: response.coord.lon,
@@ -25,69 +22,62 @@ const getCurrentData = async (lat, lon) => {
     pressure: response.main.pressure,
     humidity: response.main.humidity,
     windSpeed: response.wind.speed,
-    sunrise: new Date(response.sys.sunrise),
-    sunset: new Date(response.sys.sunset),
-    dt: response.dt,
+    sunrise: new Date(response.sys.sunrise * 1000),
+    sunset: new Date(response.sys.sunset * 1000),
   };
-
-  return current;
 };
 
-const getForecastData = async (lat, lon) => {
-  const response = await callService(
-    `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`
-  );
+export const getForecast = async ({ lat, lon }) => {
+  const response = await callService(`onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`)
+    .then((data) => data)
+    .catch((e) => console.log(e));
 
-  const forecast = response.daily
-    .map((data) => {
-      return {
-        description: data.weather[0].description,
-        icon: data.weather[0].icon,
-        temperature: data.temp.day,
-        minTemperature: data.temp.day,
-        maxTemperature: data.temp.day,
-      };
-    })
-    .slice(-7); // If we got 8 elements instead of 7, remove the first one (which is a forecast for today)
+  if (!response) return Array(DAYS_IN_FORECAST).fill();
 
-  return forecast;
+  return response.daily
+    .map((data) => ({
+      description: data.weather[0].description,
+      icon: data.weather[0].icon,
+      temperature: data.temp.day,
+      minTemperature: data.temp.day,
+      maxTemperature: data.temp.day,
+    }))
+    .slice(-DAYS_IN_FORECAST); // An extra element may be present; that means position 0 is forecast for today
 };
 
-const getPastData = async (dt, lat, lon) => {
-  const timestampNow = new Date.getTime() / 1000;
+export const getWeatherHistory = async ({ lat, lon }) => {
+  const now = new Date();
   const oldTimestamps = [];
-  for (let i = 0; i < 5; i++) {
-    const pastDate = new Date(timestampNow.getTime());
-    pastDate.setDate(timestampNow.getDate() - (i + 1));
+  for (let i = 0; i < DAYS_IN_HISTORY; i++) {
+    const pastDate = new Date(now.getTime());
+    pastDate.setDate(now.getDate() - (i + 1));
 
-    oldTimestamps.push(pastDate.getTime() / 1000);
+    oldTimestamps.push(Math.round(pastDate.getTime() / 1000));
   }
 
-  const response = await Promise.all(
+  const response = await Promise.allSettled(
     oldTimestamps.map((timestamp) =>
-      callService(
-        `https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${timestamp}`
-      )
+      callService(`onecall/timemachine?lat=${lat}&lon=${lon}&dt=${timestamp}`)
     )
   );
 
-  const historical = response.map((data) => ({
-    description: data.current.weather[0].description,
-    icon: data.current.weather[0].icon,
-    temperature: data.current.temp,
-  }));
+  return response.map((data) => {
+    if (!data.value) return;
 
-  return historical;
+    return {
+      description: data.value.current.weather[0].description,
+      icon: data.value.current.weather[0].icon,
+      temperature: data.value.current.temp,
+    };
+  });
 };
 
 const callService = async (url) => {
-  const response = await fetch(`${url}&units=metric&appid=${API_KEY}`);
+  const response = await fetch(
+    `https://api.openweathermap.org/data/2.5/${url}&units=metric&appid=${API_KEY}`
+  );
 
-  if (!response.ok) {
-    console.log('error');
-  }
+  if (!response.ok) return Promise.reject('Error fetching data from the API');
 
-  const data = response.json();
-
-  return data;
+  return await response.json();
 };

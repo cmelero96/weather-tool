@@ -16,7 +16,7 @@
 </template>
 
 <script>
-// import { getWeatherData } from './services/apiCall';
+import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
 import fakeWeatherObject from './assets/fakeWeatherObject';
 import Fuse from 'fuse.js';
 
@@ -38,12 +38,16 @@ export default {
     };
   },
   async mounted() {
-    // this.current = await getWeatherData('madrid');
-    this.current = fakeWeatherObject.current;
-    this.forecast = fakeWeatherObject.forecast;
-    this.historical = fakeWeatherObject.historical;
+    const coord = { lat: 40.4165, lon: -3.70256 };
+    this.current = await getCurrentWeather(coord);
+    this.forecast = await getForecast(coord);
+    this.historical = await getWeatherHistory(coord);
 
-    this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
+    // this.current = fakeWeatherObject.current;
+    // this.forecast = fakeWeatherObject.forecast;
+    // this.historical = fakeWeatherObject.historical;
+
+    // this.fuse = new Fuse(ALL_CITIES, SEARCH_OPTIONS);
   },
   methods: {
     search() {
