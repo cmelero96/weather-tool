@@ -4,25 +4,27 @@
   <CurrentWeather :city="city" :weather="weather.current"></CurrentWeather>
 
   <br />
-  <div v-for="day in weather.forecast" :key="day">
-    {{ day }}
-  </div>
+  <WeatherForecast :weather="weather.forecast"></WeatherForecast>
+
   <br />
-  <div v-for="day in weather.historical" :key="day">
-    {{ day }}
-  </div>
+  <WeatherHistory :weather="weather.historical"></WeatherHistory>
+
+  <br />
+  <br />
 </template>
 
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
 import { mockCityData, mockCurrent, mockForecast, mockHistorical } from './assets/mockData';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUpdated } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
 import CurrentWeather from './components/CurrentWeather.vue';
+import WeatherForecast from './components/WeatherForecast.vue';
+import WeatherHistory from './components/WeatherHistory.vue';
 
 export default {
-  components: { SearchBar, CurrentWeather },
+  components: { SearchBar, CurrentWeather, WeatherForecast, WeatherHistory },
   setup() {
     const city = ref({});
     const weather = ref({});

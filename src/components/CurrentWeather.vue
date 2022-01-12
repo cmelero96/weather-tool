@@ -1,6 +1,8 @@
 <template>
-  <section v-if="city && weather">
-    <header class="title">{{ city.name }}</header>
+  <section class="current-weather" v-if="city && weather">
+    <header class="title">
+      <h2>{{ city.name }}</h2>
+    </header>
     <div class="description">{{ weather.description }}</div>
     <img class="icon" :src="getMainSource(weather.icon)" :srcset="getSources(weather.icon)" />
     <div class="temp">Temp: {{ weather.temperature }} ºC</div>
@@ -39,4 +41,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.description {
+  text-transform: uppercase;
+}
+</style>
