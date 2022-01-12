@@ -10,9 +10,7 @@ const DAYS_IN_FORECAST = 7;
  * @returns a formatted object with all important data
  */
 export const getCurrentWeather = async ({ lat, lon }) => {
-  const response = await callService(`weather?lat=${lat}&lon=${lon}`)
-    .then((data) => data)
-    .catch((e) => console.log(e));
+  const response = await callService(`weather?lat=${lat}&lon=${lon}`);
 
   if (!response) return;
 
@@ -41,9 +39,9 @@ export const getCurrentWeather = async ({ lat, lon }) => {
  * filled with undefined values if the data were unavailable
  */
 export const getForecast = async ({ lat, lon }) => {
-  const response = await callService(`onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`)
-    .then((data) => data)
-    .catch((e) => console.log(e));
+  const response = await callService(
+    `onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`
+  );
 
   // The data for all the days comes from the same API call, so if it fails we get no data
   if (!response) return Array(DAYS_IN_FORECAST).fill();
@@ -101,7 +99,10 @@ const callService = async (url) => {
     `https://api.openweathermap.org/data/2.5/${url}&units=metric&appid=${API_KEY}`
   );
 
-  if (!response.ok) return Promise.reject('Error fetching data from the API');
+  if (!response.ok) {
+    console.log('Error fetching data from the API');
+    return;
+  }
 
   return await response.json();
 };
