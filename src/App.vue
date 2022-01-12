@@ -18,7 +18,6 @@
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
 import { current, forecast, history } from './assets/mockWeather';
 import Fuse from 'fuse.js';
-// import { debounce } from 'lodash';
 
 import ALL_CITIES from './assets/history.city.list.json';
 const SEARCH_OPTIONS = {
