@@ -27,14 +27,18 @@
       </section>
     </div>
     <div v-else-if="weather">Error retrieving data</div>
-    <div v-else>Loading</div>
+    <Spinner v-else :color="'#000000'" />
   </section>
 </template>
 
 <script>
 import { ref } from 'vue';
 import { iconGetters } from '../utils';
+
+import Spinner from 'vue-spinner/src/ClipLoader.vue';
+
 export default {
+  components: { Spinner },
   props: {
     weather: { type: Object, required: true },
     toggler: { type: Boolean, default: false },
@@ -50,17 +54,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.description {
-  text-transform: uppercase;
-}
-
-.caret {
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.caret.rotated {
-  transform: rotateZ(180deg);
-}
-</style>
+<style scoped></style>

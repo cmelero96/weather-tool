@@ -8,17 +8,19 @@
         </template>
       </WeatherCard>
     </div>
-    <div v-if="!weather">Loading past data...</div>
+    <Spinner v-if="!weather" :color="'#000000'" />
   </section>
 </template>
 
 <script>
-import WeatherCard from './WeatherCard.vue';
 import { computed } from 'vue';
 import { getWeekdays } from '../utils';
 
+import WeatherCard from './WeatherCard.vue';
+import Spinner from 'vue-spinner/src/ClipLoader.vue';
+
 export default {
-  components: { WeatherCard },
+  components: { WeatherCard, Spinner },
   props: {
     weather: { type: Object, required: true },
   },
