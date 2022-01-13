@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { iconGetters } from '../shared/utils';
+import { iconGetters } from '../utils';
 
 export default {
   props: {

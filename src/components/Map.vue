@@ -23,7 +23,7 @@
 <script>
 // TODO: Make markers clickable to refresh the search to the clicked value (emit event to App, then send back)
 import { computed, ref, watch } from 'vue';
-import { createButton } from '../shared/utils';
+import { createButton } from '../utils';
 
 export default {
   props: {
