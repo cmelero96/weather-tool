@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getCurrentWeather, getForecast, getWeatherHistory } from './services/apiCall';
+import { getCurrentWeather, getForecast, getWeatherHistory } from './services/weatherServices';
 import { mockCityData, mockCurrent, mockForecast, mockHistorical } from './assets/mockData';
 import { ref, onMounted, watch } from 'vue';
 
