@@ -1,13 +1,24 @@
 <template>
-  <input type="text" v-model="searchTerm" @focus="onFocus" @blur="onBlur" />
-  <div v-if="focused" class="country-list">
-    <div
-      v-for="item in searchResults"
-      :key="item"
-      class="country-option"
-      @mousedown="selectCity(item)"
-    >
-      {{ item }}
+  <div class="search-bar-wrapper">
+    <input
+      class="search-bar"
+      type="text"
+      placeholder="Search city"
+      v-model="searchTerm"
+      @focus="onFocus"
+      @blur="onBlur"
+    />
+    <div class="suggestions-wrapper">
+      <div v-if="focused && searchResults.length" class="city-list">
+        <div
+          v-for="item in searchResults"
+          :key="item"
+          class="city-option"
+          @mousedown="selectCity(item)"
+        >
+          {{ `${item.name}, ${item.countryCode}` }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -48,4 +59,36 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.search-bar-wrapper {
+  padding-bottom: 0.6em;
+}
+
+.search-bar {
+  font-size: 18px;
+  text-align: center;
+}
+
+.suggestions-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 2;
+  width: max-content;
+}
+.city-list {
+  border: 1px solid black;
+  border-radius: 2px;
+  background-color: white;
+}
+.city-option {
+  line-height: 2em;
+  padding: 0 1em;
+}
+.city-option:hover {
+  cursor: pointer;
+  background-color: lightblue;
+}
+</style>

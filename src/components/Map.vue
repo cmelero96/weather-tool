@@ -14,6 +14,14 @@
           :position="{ lat: marker.coord.lat, lng: marker.coord.lon }"
           :clickable="true"
           @click="updateLocation(marker)"
+          :title="marker.id === -1 ? 'Current location' : marker.name"
+          :size="{ width: 500, height: 500 }"
+          :icon="{
+            url: `http://maps.google.com/mapfiles/kml/paddle/${
+              marker.id === -1 ? 'blu' : index === markers.length - 1 ? 'red' : 'orange'
+            }-circle.png`,
+            scaledSize: { width: 55, height: 55 },
+          }"
         />
       </GMapCluster>
     </GMapMap>
@@ -92,7 +100,7 @@ export default {
 <style>
 .map-container {
   height: 400px;
-  width: 300px;
+  width: 500px;
 }
 .vue-map-container {
   height: 100%;
