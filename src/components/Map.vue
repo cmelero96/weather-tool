@@ -1,6 +1,6 @@
 <template>
   <div class="map-wrapper">
-    <GMapMap v-if="coord" :center="center" :options="{}" :zoom="12.5" ref="map">
+    <GMapMap v-if="coord" :center="center" :options="{}" :zoom="12" ref="map">
       <GMapCluster>
         <GMapMarker
           v-for="(marker, index) in markers"
@@ -16,18 +16,17 @@
 </template>
 
 <script>
+// TODO: Make markers clickable to refresh the search to the clicked value (emit event to App, then send back)
 import { computed, ref, watch } from 'vue';
 
-const createButton = (map) => {
+const createButton = (title, tooltip, onClick) => {
   const controlUI = document.createElement('button');
-  controlUI.title = 'Click to zoom the map';
+  controlUI.title = tooltip;
   const controlText = document.createElement('div');
-  controlText.innerHTML = `Center`;
+  controlText.innerHTML = title;
   controlUI.appendChild(controlText);
 
-  controlUI.addEventListener('click', () => {
-    map.setZoom(map.getZoom() + 1);
-  });
+  controlUI.addEventListener('click', onClick);
 
   return controlUI;
 };
@@ -37,33 +36,41 @@ export default {
     coord: { type: Object, required: true },
   },
   setup(props) {
-    const center = computed(() => ({
-      lat: props.coord.lat,
-      lng: props.coord.lon,
-    }));
+    // For every new search, create a marker with the search coordinates
     const markers = ref([]);
-
     watch(
       () => props.coord,
-      (newCoord) => {
-        console.log(newCoord);
-        markers.value.push({ position: { lat: newCoord.lat, lng: newCoord.lon } });
-      }
+      (coord) => markers.value.push({ position: { lat: coord.lat, lng: coord.lon } })
     );
 
+    // Inject two custom buttons on the map to center the view and remove old markers
     const map = ref();
-    const button = ref();
-
     watch(map, (googleMap) => {
       if (googleMap) {
         googleMap.$mapPromise.then((map) => {
-          const button = createButton(map);
-          map.controls[google.maps.ControlPosition.TOP_CENTER].push(button);
+          const centerButton = createButton(
+            'Center view',
+            'Click to center the view to the last city',
+            () => map.setCenter(markers.value.at(-1).position)
+          );
+          const clearMarkersButton = createButton(
+            'Clear old markers',
+            'Click to remove markers from past searches from the map',
+            () => (markers.value = [markers.value.at(-1)])
+          );
+          map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerButton);
+          map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(clearMarkersButton);
         });
       }
     });
 
-    return { center, markers, map, button };
+    // Update the center of the map whenever new coordinates are obtained
+    const center = computed(() => ({
+      lat: props.coord.lat,
+      lng: props.coord.lon,
+    }));
+
+    return { center, markers, map };
   },
 };
 </script>
