@@ -23,8 +23,8 @@
           <div class="pressure">Pressure: {{ weather.pressure }} hPa</div>
           <div class="humidity">Humidity: {{ weather.humidity }}%</div>
           <div class="wind-speed">Wind speed: {{ weather.windSpeed }}m/s</div>
-          <div class="sunrise">Sunrise: {{ weather.sunrise }}</div>
-          <div class="sunset">Sunset: {{ weather.sunset }}</div>
+          <div class="sunrise">Sunrise: {{ formatDate(weather.sunrise) }}</div>
+          <div class="sunset">Sunset: {{ formatDate(weather.sunset) }}</div>
         </div>
       </section>
     </div>
@@ -53,7 +53,10 @@ export default {
     const showExtraInfo = ref(false);
     const toggleExtraInfo = () => (showExtraInfo.value = !showExtraInfo.value);
 
-    return { showExtraInfo, toggleExtraInfo, getSrc, getSrcSet };
+    const formatDate = (date) =>
+      new Date(date).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
+
+    return { showExtraInfo, toggleExtraInfo, getSrc, getSrcSet, formatDate };
   },
 };
 </script>
