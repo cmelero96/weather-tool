@@ -1,4 +1,5 @@
 <template>
+  <header><h1>Weather Forecast</h1></header>
   <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
   <br />
   <div class="main-container">
@@ -45,8 +46,24 @@ export default {
       updateWeather(newCity.coord);
     });
 
+    onMounted(() => {
+      const initialData = {};
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((data) => {
+          city.value = {
+            id: -1,
+            name: 'Your current location',
+            countryCode: '',
+            coord: { lat: data.coords.latitude, lon: data.coords.longitude },
+          };
+        });
+      } else {
+        city.value = mockCityData;
+      }
+    });
+
     // Mocked functionality
-    onMounted(() => (city.value = mockCityData));
     const updateWeather = () => {
       weather.value = {
         current: mockCurrent,
@@ -76,7 +93,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   box-sizing: border-box;
 }
 
@@ -91,7 +107,7 @@ export default {
 }
 
 .map-wrapper {
-  flex-basis: 25%;
   align-self: stretch;
+  padding: 0 1em 0 4em;
 }
 </style>
