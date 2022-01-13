@@ -31,7 +31,6 @@ export const getWeekdays = (dateNow, amountOfDays) => {
     if (dayNumber >= WEEKDAYS.length) dayNumber = 0; // Correct when increasing
     if (dayNumber < 0) dayNumber = WEEKDAYS.length - 1; // Correct when decreasing
 
-    console.log({ [count]: WEEKDAYS[dayNumber] });
     weekdays.push(WEEKDAYS[dayNumber]);
     dayNumber += 1 * direction; // Iterate forwards or backwards depending on sign
   }
