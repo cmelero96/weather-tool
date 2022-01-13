@@ -62,6 +62,7 @@ export default {
 
 .caret {
   transition: all 0.15s ease;
+  cursor: pointer;
 }
 
 .caret.rotated {
