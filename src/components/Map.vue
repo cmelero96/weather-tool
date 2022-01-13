@@ -1,6 +1,12 @@
 <template>
-  <div class="map-wrapper">
-    <GMapMap v-if="city && city.coord" :center="center" :options="{}" :zoom="12" ref="map">
+  <div class="map-container">
+    <GMapMap
+      v-if="city && city.coord"
+      :center="center"
+      :options="{ disableDefaultUI: true, clickableIcons: false }"
+      :zoom="11"
+      ref="map"
+    >
       <GMapCluster>
         <GMapMarker
           v-for="(marker, index) in markers"
@@ -17,18 +23,7 @@
 <script>
 // TODO: Make markers clickable to refresh the search to the clicked value (emit event to App, then send back)
 import { computed, ref, watch } from 'vue';
-
-const createButton = (title, tooltip, onClick) => {
-  const controlUI = document.createElement('button');
-  controlUI.title = tooltip;
-  const controlText = document.createElement('div');
-  controlText.innerHTML = title;
-  controlUI.appendChild(controlText);
-
-  controlUI.addEventListener('click', onClick);
-
-  return controlUI;
-};
+import { createButton } from '../shared/utils';
 
 export default {
   props: {
@@ -67,7 +62,7 @@ export default {
             () => (markers.value = [markers.value.at(-1)])
           );
           map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerButton);
-          map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(clearMarkersButton);
+          map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(clearMarkersButton);
         });
       }
     });
@@ -95,11 +90,16 @@ export default {
 </script>
 
 <style>
-.map-wrapper {
-  height: 500px;
+.map-container {
+  height: 400px;
+  width: 300px;
 }
 .vue-map-container {
   height: 100%;
   width: 100%;
+}
+
+.gm-style-cc {
+  display: none;
 }
 </style>

@@ -1,9 +1,14 @@
 <template>
   <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
-  <Map :city="city" @updateLocation="updateCity"></Map>
   <br />
-  <CurrentWeather :city="city" :weather="weather.current"></CurrentWeather>
-
+  <div class="main-container">
+    <CurrentWeather
+      class="current-wrapper"
+      :city="city"
+      :weather="weather.current"
+    ></CurrentWeather>
+    <Map class="map-wrapper" :city="city" @updateLocation="updateCity"></Map>
+  </div>
   <br />
   <WeatherForecast :weather="weather.forecast"></WeatherForecast>
 
@@ -72,5 +77,21 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  box-sizing: border-box;
+}
+
+.main-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.current-wrapper {
+  flex-basis: 50%;
+  padding-top: 2em;
+}
+
+.map-wrapper {
+  flex-basis: 25%;
+  align-self: stretch;
 }
 </style>
