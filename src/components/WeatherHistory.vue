@@ -34,7 +34,11 @@ export default {
 </script>
 
 <style scoped>
-.weather-history > .container {
+.description {
+  text-transform: uppercase;
+}
+
+.container {
   display: flex;
   width: 70%;
   margin: auto;

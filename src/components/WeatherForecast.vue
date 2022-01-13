@@ -36,7 +36,11 @@ export default {
 </script>
 
 <style scoped>
-.weather-forecast > .container {
+.description {
+  text-transform: uppercase;
+}
+
+.container {
   display: flex;
   width: 100%;
   justify-content: space-around;
