@@ -21,7 +21,13 @@
 
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/weatherServices';
-import { mockCityData, mockCurrent, mockForecast, mockHistorical } from './assets/mockData';
+import {
+  promiseMock,
+  mockCityData,
+  mockCurrent,
+  mockForecast,
+  mockHistorical,
+} from './assets/mockData';
 import { ref, onMounted, watch } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
@@ -33,6 +39,7 @@ import Map from './components/Map.vue';
 export default {
   components: { SearchBar, CurrentWeather, WeatherForecast, WeatherHistory, Map },
   setup() {
+    const isLoading = ref(true);
     const city = ref({});
     const weather = ref({});
     const searchBar = ref();
@@ -64,24 +71,20 @@ export default {
     });
 
     // Mocked functionality
-    const updateWeather = () => {
-      weather.value = {
-        current: mockCurrent,
-        forecast: mockForecast,
-        historical: mockHistorical,
-      };
+    const updateWeather = async () => {
+      promiseMock(mockCurrent, 1000).then((data) => (weather.value.current = data));
+      promiseMock(mockForecast, 4000).then((data) => (weather.value.forecast = data));
+      promiseMock(mockHistorical, 2000).then((data) => (weather.value.historical = data));
     };
 
     // TODO: Uncomment this and remove mocked functionality above
     // const updateWeather = async (coordinates) => {
-    //   weather.value = {
-    //     current: await getCurrentWeather(coordinates),
-    //     forecast: await getForecast(coordinates),
-    //     historical: await getWeatherHistory(coordinates),
-    //   };
+    //  getCurrentWeather(coordinates).then((data) => (weather.value.current = data));
+    //  getForecast(coordinates).then((data) => (weather.value.forecast = data));
+    //  getWeatherHistory(coordinates).then((data) => (weather.value.historical = data));
     // };
 
-    return { city, weather, updateCity, searchBar };
+    return { city, weather, updateCity, searchBar, isLoading };
   },
 };
 </script>

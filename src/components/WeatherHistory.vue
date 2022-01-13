@@ -1,13 +1,14 @@
 <template>
-  <section class="weather-history" v-if="weather">
+  <section class="weather-history">
     <header><h3>Historical data</h3></header>
-    <div class="container">
+    <div class="container" v-if="weather">
       <div v-for="day in weather" :key="day" :class="`historical historical-${day}`">
         <div class="description">{{ day.description }}</div>
         <img class="icon" :src="getSrc(day.icon)" :srcset="getSrcSet(day.icon)" />
         <div class="temp">Temp: {{ day.temperature }} ºC</div>
       </div>
     </div>
+    <div v-else>Loading past data...</div>
   </section>
 </template>
 

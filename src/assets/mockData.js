@@ -1,3 +1,7 @@
+export const promiseMock = async (mock, time) => {
+  return new Promise((resolve) => setTimeout(() => resolve(mock), time));
+};
+
 export const mockCityData = {
   id: 3117735,
   name: 'Madrid',
