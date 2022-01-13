@@ -12,10 +12,11 @@ export default (searchValues) => {
   const fuse = ref(new Fuse(searchValues, SEARCH_OPTIONS));
 
   // Create method to fuzzy search and handle the results
-  const searchTerm = ref('');
-  const getSuggestions = () => {
+  const getSuggestions = (term) => {
+    if (!term) return [];
+
     const search = fuse.value
-      .search(searchTerm.value)
+      .search(term)
       .slice(0, 10)
       .map((city) => {
         let id = city.item.id;
@@ -34,11 +35,12 @@ export default (searchValues) => {
   };
 
   // Perform a new search on user input, after a short delay
+  const searchTerm = ref('');
   const searchResults = ref([]);
   debouncedWatch(
     searchTerm,
-    () => {
-      searchResults.value = getSuggestions(searchTerm);
+    (newTerm) => {
+      searchResults.value = getSuggestions(newTerm);
     },
     { debounce: 150 }
   );
