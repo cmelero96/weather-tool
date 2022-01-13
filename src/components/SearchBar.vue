@@ -59,7 +59,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .search-bar-wrapper {
   padding-bottom: 0.6em;
 }

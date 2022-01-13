@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .description {
   text-transform: uppercase;
 }

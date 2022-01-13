@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .weather-history > .container {
   display: flex;
   width: 70%;

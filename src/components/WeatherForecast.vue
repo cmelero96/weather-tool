@@ -35,7 +35,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .weather-forecast > .container {
   display: flex;
   width: 100%;
