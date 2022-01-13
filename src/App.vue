@@ -1,6 +1,6 @@
 <template>
-  <SearchBar @selectCity="updateCity"></SearchBar>
-  <Map :coord="city.coord"></Map>
+  <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
+  <Map :city="city" @updateLocation="updateCity"></Map>
   <br />
   <CurrentWeather :city="city" :weather="weather.current"></CurrentWeather>
 
@@ -29,8 +29,12 @@ export default {
   setup() {
     const city = ref({});
     const weather = ref({});
+    const searchBar = ref();
 
-    const updateCity = (selectedCity) => (city.value = selectedCity);
+    const updateCity = (selectedCity) => {
+      city.value = selectedCity;
+      searchBar.value.searchTerm = selectedCity.name;
+    };
 
     watch(city, (newCity) => {
       updateWeather(newCity.coord);
@@ -55,7 +59,7 @@ export default {
     //   };
     // };
 
-    return { city, weather, updateCity };
+    return { city, weather, updateCity, searchBar };
   },
 };
 </script>
