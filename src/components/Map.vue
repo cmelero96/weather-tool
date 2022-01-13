@@ -59,7 +59,7 @@ export default {
             () => {
               const { lat, lon } = markers.value.at(-1).coord;
               console.log(lat, lon);
-              map.setCenter({ lat, lng: lon });
+              map.panTo({ lat, lng: lon });
             }
           );
           const clearMarkersButton = createButton(
