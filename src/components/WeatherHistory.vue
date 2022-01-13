@@ -4,7 +4,7 @@
     <div class="container">
       <div v-for="day in weather" :key="day" :class="`historical historical-${day}`">
         <div class="description">{{ day.description }}</div>
-        <img class="icon" :src="getMainSource(day.icon)" :srcset="getSources(day.icon)" />
+        <img class="icon" :src="getSrc(day.icon)" :srcset="getSrcSet(day.icon)" />
         <div class="temp">Temp: {{ day.temperature }} ºC</div>
       </div>
     </div>
@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { iconGetters } from '../shared/utils';
+
 export default {
   props: {
     weather: {
@@ -20,18 +22,13 @@ export default {
     },
   },
   setup(props) {
-    const getMainSource = (icon) => `https://openweathermap.org/img/wn/${icon}.png`;
-    const getSources = (icon) => {
-      return `https://openweathermap.org/img/wn/${icon}.png,
-              https://openweathermap.org/img/wn/${icon}@2x.png,
-              https://openweathermap.org/img/wn/${icon}@4x.png`;
-    };
+    const { getSrc, getSrcSet } = iconGetters;
 
     const test = (a) => {
       console.log(a);
     };
 
-    return { getMainSource, getSources, test };
+    return { getSrc, getSrcSet, test };
   },
 };
 </script>

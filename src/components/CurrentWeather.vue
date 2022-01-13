@@ -4,7 +4,7 @@
       <h2>{{ city.name }}</h2>
     </header>
     <div class="description">{{ weather.description }}</div>
-    <img class="icon" :src="getMainSource(weather.icon)" :srcset="getSources(weather.icon)" />
+    <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
     <div class="temp">Temp: {{ weather.temperature }} ºC</div>
     <div class="temp-min">Min: {{ weather.minTemperature }} ºC</div>
     <div class="temp-max">Max: {{ weather.maxTemperature }} ºC</div>
@@ -31,6 +31,8 @@
 
 <script>
 import { ref } from 'vue';
+import { iconGetters } from '../shared/utils';
+
 export default {
   props: {
     city: {
@@ -43,17 +45,12 @@ export default {
     },
   },
   setup() {
-    const getMainSource = (icon) => `https://openweathermap.org/img/wn/${icon}.png`;
-    const getSources = (icon) => {
-      return `https://openweathermap.org/img/wn/${icon}.png,
-              https://openweathermap.org/img/wn/${icon}@2x.png,
-              https://openweathermap.org/img/wn/${icon}@4x.png`;
-    };
+    const { getSrc, getSrcSet } = iconGetters;
 
     const showExtraInfo = ref(false);
     const toggleExtraInfo = () => (showExtraInfo.value = !showExtraInfo.value);
 
-    return { showExtraInfo, toggleExtraInfo, getMainSource, getSources };
+    return { showExtraInfo, toggleExtraInfo, getSrc, getSrcSet };
   },
 };
 </script>
