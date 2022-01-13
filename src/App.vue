@@ -1,5 +1,6 @@
 <template>
   <SearchBar @selectCity="updateCity"></SearchBar>
+  <Map :coord="city.coord"></Map>
   <br />
   <CurrentWeather :city="city" :weather="weather.current"></CurrentWeather>
 
@@ -9,7 +10,6 @@
   <br />
   <WeatherHistory :weather="weather.historical"></WeatherHistory>
 
-  <br />
   <br />
 </template>
 
@@ -22,9 +22,10 @@ import SearchBar from './components/SearchBar.vue';
 import CurrentWeather from './components/CurrentWeather.vue';
 import WeatherForecast from './components/WeatherForecast.vue';
 import WeatherHistory from './components/WeatherHistory.vue';
+import Map from './components/Map.vue';
 
 export default {
-  components: { SearchBar, CurrentWeather, WeatherForecast, WeatherHistory },
+  components: { SearchBar, CurrentWeather, WeatherForecast, WeatherHistory, Map },
   setup() {
     const city = ref({});
     const weather = ref({});
