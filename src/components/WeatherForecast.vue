@@ -2,7 +2,7 @@
   <section class="weather-forecast">
     <header><h3>Forecast</h3></header>
     <div class="container" v-if="weather">
-      <div v-for="(day, n) in weather" :key="day" :class="`forecast forecast-${n}`">
+      <div v-for="(day, n) in weather" :key="day" :class="`weather forecast-${n}`">
         <h4>{{ n === 0 ? 'Tomorrow' : weekdays[n] }}</h4>
         <div class="description">{{ day.description }}</div>
         <img class="icon" :src="getSrc(day.icon)" :srcset="getSrcSet(day.icon)" />
