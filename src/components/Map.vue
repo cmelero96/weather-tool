@@ -58,7 +58,6 @@ export default {
             'Click to center the view to the last city',
             () => {
               const { lat, lon } = markers.value.at(-1).coord;
-              console.log(lat, lon);
               map.panTo({ lat, lng: lon });
             }
           );
