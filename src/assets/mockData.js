@@ -45,11 +45,11 @@ export const mockForecast = [
     maxTemperature: 7.14,
   },
   {
-    description: 'clear sky',
-    icon: '01d',
-    temperature: 7.08,
-    minTemperature: 7.08,
-    maxTemperature: 7.08,
+    // description: 'clear sky',
+    // icon: '01d',
+    // temperature: 7.08,
+    // minTemperature: 7.08,
+    // maxTemperature: 7.08,
   },
   {
     description: 'clear sky',

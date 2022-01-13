@@ -1,77 +1,34 @@
 <template>
-  <section class="current-weather" v-if="city">
-    <header class="title">
+  <WeatherCard v-if="city" :weather="weather" toggler>
+    <template v-slot:title>
       <h2>{{ city.name }}</h2>
-    </header>
-    <div class="container" v-if="weather">
-      <div class="description">{{ weather.description }}</div>
-      <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
-      <div class="temp">Temp: {{ weather.temperature }} ºC</div>
-      <div class="temp-min">Min: {{ weather.minTemperature }} ºC</div>
-      <div class="temp-max">Max: {{ weather.maxTemperature }} ºC</div>
-      <section class="extra-info-wrapper">
-        <header class="extra-info-title">
-          <strong>Additional information </strong>
-          <img
-            @click="toggleExtraInfo"
-            alt="toggle the additional information"
-            src="https://img.icons8.com/small/16/000000/expand-arrow.png"
-            :class="`caret ${showExtraInfo && 'rotated'}`"
-          />
-        </header>
-        <div v-if="showExtraInfo" class="extra-info-container">
-          <div class="pressure">Pressure: {{ weather.pressure }} hPa</div>
-          <div class="humidity">Humidity: {{ weather.humidity }}%</div>
-          <div class="wind-speed">Wind speed: {{ weather.windSpeed }}m/s</div>
-          <div class="sunrise">Sunrise: {{ formatDate(weather.sunrise) }}</div>
-          <div class="sunset">Sunset: {{ formatDate(weather.sunset) }}</div>
-        </div>
-      </section>
-    </div>
-    <div v-else>Loading current data...</div>
-  </section>
+    </template>
+    <template v-slot:extraInfo>
+      <div class="pressure">Pressure: {{ weather.pressure }} hPa</div>
+      <div class="humidity">Humidity: {{ weather.humidity }}%</div>
+      <div class="wind-speed">Wind speed: {{ weather.windSpeed }}m/s</div>
+      <div class="sunrise">Sunrise: {{ formatDate(weather.sunrise) }}</div>
+      <div class="sunset">Sunset: {{ formatDate(weather.sunset) }}</div>
+    </template>
+  </WeatherCard>
 </template>
 
 <script>
-import { ref } from 'vue';
-import { iconGetters } from '../utils';
+import WeatherCard from './WeatherCard.vue';
 
 export default {
+  components: { WeatherCard },
   props: {
-    city: {
-      type: Object,
-      required: true,
-    },
-    weather: {
-      type: Object,
-      required: true,
-    },
+    city: { type: Object, required: true },
+    weather: { type: Object, required: true },
   },
   setup() {
-    const { getSrc, getSrcSet } = iconGetters;
-
-    const showExtraInfo = ref(false);
-    const toggleExtraInfo = () => (showExtraInfo.value = !showExtraInfo.value);
-
     const formatDate = (date) =>
       new Date(date).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 
-    return { showExtraInfo, toggleExtraInfo, getSrc, getSrcSet, formatDate };
+    return { formatDate };
   },
 };
 </script>
 
-<style scoped>
-.description {
-  text-transform: uppercase;
-}
-
-.caret {
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.caret.rotated {
-  transform: rotateZ(180deg);
-}
-</style>
+<style scoped></style>

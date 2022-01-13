@@ -1,36 +1,31 @@
 <template>
   <section class="weather-forecast">
     <header><h3>Forecast</h3></header>
-    <div class="container" v-if="weather">
-      <div v-for="(day, n) in weather" :key="day" :class="`weather forecast-${n}`">
-        <h4>{{ n === 0 ? 'Tomorrow' : weekdays[n] }}</h4>
-        <div class="description">{{ day.description }}</div>
-        <img class="icon" :src="getSrc(day.icon)" :srcset="getSrcSet(day.icon)" />
-        <div class="temp">Temp: {{ day.temperature }} ºC</div>
-        <div class="temp-min">Min: {{ day.minTemperature }} ºC</div>
-        <div class="temp-max">Max: {{ day.maxTemperature }} ºC</div>
-      </div>
+    <div class="container">
+      <WeatherCard v-for="(day, n) in weather" :key="day" :weather="day">
+        <template v-slot:title>
+          <h4>{{ n === 0 ? 'Tomorrow' : weekdays[n] }}</h4>
+        </template>
+      </WeatherCard>
     </div>
-    <div v-else>Loading forecast...</div>
+    <div v-if="!weather">Loading forecast...</div>
   </section>
 </template>
 
 <script>
+import WeatherCard from './WeatherCard.vue';
 import { computed } from '@vue/reactivity';
-import { getWeekdays, iconGetters } from '../utils';
+import { getWeekdays } from '../utils';
 
 export default {
+  components: { WeatherCard },
   props: {
-    weather: {
-      type: Object,
-      required: true,
-    },
+    weather: { type: Object, required: true },
   },
   setup(props) {
-    const { getSrc, getSrcSet } = iconGetters;
     const weekdays = computed(() => getWeekdays(new Date(), props.weather.length));
 
-    return { getSrc, getSrcSet, weekdays };
+    return { weekdays };
   },
 };
 </script>
