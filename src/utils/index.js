@@ -1,3 +1,4 @@
+// Retrieve the weather icons from OpenWeatherMap page.
 export const iconGetters = {
   getSrc: (icon) => `https://openweathermap.org/img/wn/${icon}.png`,
   getSrcSet: (icon) =>
@@ -6,6 +7,7 @@ export const iconGetters = {
      https://openweathermap.org/img/wn/${icon}@4x.png`,
 };
 
+// Custom buttons for the Google Map need to be created with vanilla JS
 export const createButton = (title, tooltip, onClick) => {
   const button = document.createElement('button');
   button.title = tooltip;
