@@ -105,11 +105,12 @@ export default {
 }
 
 .current-wrapper {
-  flex-basis: 50%;
+  flex-basis: 30%;
 }
 
 .map-wrapper {
   align-self: stretch;
   padding: 0 1em 0 4em;
+  flex-basis: 50%;
 }
 </style>
