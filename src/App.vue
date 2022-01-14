@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky">
+  <div class="main-header">
     <header><h1>Weather Forecast</h1></header>
     <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
   </div>
@@ -95,13 +95,29 @@ export default {
   box-sizing: border-box;
 }
 
-h1 {
-  text-shadow: 0 2px 5px lightgray;
+.main-header {
+  position: sticky;
+  height: 7rem;
+  top: -3.5rem;
+  z-index: 2;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  border-bottom: 1px solid;
+
+  h1 {
+    text-shadow: 0 2px 5px lightgray;
+    margin: 0;
+  }
 }
 
 .main-container {
   display: flex;
   justify-content: space-around;
+  padding-top: 2rem;
 
   .current-wrapper {
     flex-basis: 30%;
