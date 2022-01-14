@@ -23,7 +23,7 @@ import {
   mockCurrent,
   mockForecast,
   mockHistorical,
-} from './assets/mockData';
+} from './utils/mockData';
 import { ref, onMounted, watch } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';

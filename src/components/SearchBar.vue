@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import ALL_CITIES from '../assets/history.city.list.json';
+import ALL_CITIES from '../utils/history.city.list.json';
 import useSuggestions from '../composables/useSuggestions';
 import { ref } from 'vue';
 

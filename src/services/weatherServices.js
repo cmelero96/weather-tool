@@ -1,4 +1,4 @@
-import { OWM_API_KEY as API_KEY } from '../assets/api-key';
+import { OWM_API_KEY as API_KEY } from '../utils/api-key';
 
 const DAYS_IN_HISTORY = 5;
 const DAYS_IN_FORECAST = 7;
