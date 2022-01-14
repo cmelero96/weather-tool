@@ -64,7 +64,7 @@ export default {
 
 .search-bar-wrapper {
   padding-bottom: 0.6em;
-  color: $secondary-color-text;
+  color: $text-color;
 
   .search-bar {
     font-size: 18px;
@@ -90,11 +90,11 @@ export default {
       .city-option {
         line-height: 2em;
         padding: 0 1em;
-        background-color: $secondary-color-light;
+        background-color: $primary-color-light;
 
         &:hover {
           cursor: pointer;
-          background-color: $secondary-color;
+          background-color: $primary-color-highlight;
         }
       }
     }

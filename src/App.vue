@@ -102,8 +102,8 @@ body {
   color: #2c3e50;
   box-sizing: border-box;
   min-height: 100vh;
-  background-color: $main-color-light;
-  color: $main-color-text;
+  background-color: $background-color-light;
+  color: $text-color;
 }
 
 .main-header {
@@ -111,7 +111,7 @@ body {
   height: 7rem;
   top: -3.5rem;
   z-index: 2;
-  background-color: $main-color;
+  background-color: $background-color;
 
   display: flex;
   flex-direction: column;

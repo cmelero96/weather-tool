@@ -72,7 +72,7 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: $primary-color-light;
-  color: $main-color-text;
+  color: $text-color;
 
   .title {
     border-bottom: 1px solid black;
