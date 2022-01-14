@@ -8,18 +8,20 @@
       @focus="onFocus"
       @blur="onBlur"
     />
-    <div class="suggestions-wrapper">
-      <ul v-if="focused && searchResults.length" class="city-list">
-        <li
-          v-for="item in searchResults"
-          :key="item"
-          class="city-option"
-          @mousedown="selectCity(item)"
-        >
-          {{ `${item.name}, ${item.countryCode}` }}
-        </li>
-      </ul>
-    </div>
+    <transition name="results">
+      <div class="suggestions-wrapper" v-if="focused && searchResults.length">
+        <ul class="city-list">
+          <li
+            v-for="item in searchResults"
+            :key="item"
+            class="city-option"
+            @mousedown="selectCity(item)"
+          >
+            {{ `${item.name}, ${item.countryCode}` }}
+          </li>
+        </ul>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -66,6 +68,19 @@ export default {
   padding-bottom: 0.6em;
   color: $text-color;
 
+  .results-enter-active,
+  .results-leave-active {
+    height: 0;
+    transition: all 0.18s linear;
+  }
+
+  .results-enter-from,
+  .results-leave-to {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    opacity: 0.5;
+  }
+
   .search-bar {
     font-size: 18px;
     text-align: center;
@@ -87,7 +102,7 @@ export default {
       padding: 0;
       border: 1px solid black;
       border-radius: 2px;
-      background-color: white;
+      background-color: $primary-color-light;
 
       .city-option {
         list-style: none;
