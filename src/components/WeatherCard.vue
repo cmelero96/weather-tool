@@ -1,10 +1,12 @@
 <template>
-  <section>
-    <header>
+  <section class="weather-card">
+    <header class="title">
       <slot name="title" />
     </header>
     <div class="container" v-if="weather && weather.temperature">
-      <div class="description">{{ weather.description }}</div>
+      <div class="description">
+        <div>{{ weather.description }}</div>
+      </div>
       <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
 
       <div class="temp">Temp: {{ weather.temperature }} ºC</div>
@@ -26,7 +28,7 @@
         </div>
       </section>
     </div>
-    <div v-else-if="weather">Error retrieving data</div>
+    <div v-else-if="weather" class="error-msg"><div>Error retrieving data</div></div>
     <Spinner v-else :color="'#000000'" />
   </section>
 </template>
@@ -54,4 +56,37 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.weather-card {
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.title {
+  border-bottom: 1px solid black;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em 0;
+}
+
+.description {
+  text-transform: uppercase;
+  height: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.error-msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40% 1em;
+}
+</style>

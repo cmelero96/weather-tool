@@ -43,4 +43,8 @@ export default {
   margin: auto;
   justify-content: space-around;
 }
+
+.container > * {
+  flex-basis: 15%;
+}
 </style>

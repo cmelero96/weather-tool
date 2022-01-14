@@ -42,4 +42,8 @@ export default {
   width: 100%;
   justify-content: space-around;
 }
+
+.container > * {
+  flex-basis: 12%;
+}
 </style>
