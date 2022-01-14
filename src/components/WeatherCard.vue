@@ -3,34 +3,39 @@
     <header class="title">
       <slot name="title" />
     </header>
-    <div class="container" v-if="weather && weather.temperature">
-      <div class="description">
-        <div>{{ weather.description }}</div>
-      </div>
-      <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
-
-      <div class="temp">Temp: {{ weather.temperature }}ºC</div>
-      <div v-if="weather.minTemperature" class="temp-min">Min: {{ weather.minTemperature }}ºC</div>
-      <div v-if="weather.maxTemperature" class="temp-max">Max: {{ weather.maxTemperature }}ºC</div>
-
-      <section v-if="toggler" class="extra-info-wrapper">
-        <header class="extra-info-title">
-          <strong>Additional information </strong>
-          <img
-            @click="toggleExtraInfo"
-            alt="toggle the additional information"
-            src="https://img.icons8.com/small/16/000000/expand-arrow.png"
-            :class="`caret ${showExtraInfo && 'rotated'}`"
-          />
-        </header>
-        <div v-if="showExtraInfo" class="extra-info-container">
-          <slot name="extraInfo" />
+    <div class="container">
+      <div class="content" v-if="weather && weather.temperature">
+        <div class="description">
+          <div>{{ weather.description }}</div>
         </div>
-        <div v-else class="space-filler"></div>
-      </section>
+        <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
+
+        <div class="temp">Temp: {{ weather.temperature }}ºC</div>
+        <div v-if="weather.minTemperature" class="temp-min">
+          Min: {{ weather.minTemperature }}ºC
+        </div>
+        <div v-if="weather.maxTemperature" class="temp-max">
+          Max: {{ weather.maxTemperature }}ºC
+        </div>
+
+        <section v-if="toggler" class="extra-info-wrapper">
+          <header class="extra-info-title">
+            <strong>Additional information </strong>
+            <img
+              @click="toggleExtraInfo"
+              alt="toggle the additional information"
+              src="https://img.icons8.com/small/16/000000/expand-arrow.png"
+              :class="`caret ${showExtraInfo && 'rotated'}`"
+            />
+          </header>
+          <div :class="`extra-info-container ${!showExtraInfo && 'hidden'}`">
+            <slot name="extraInfo" />
+          </div>
+        </section>
+      </div>
+      <div v-else-if="weather" class="error-msg">Error retrieving data</div>
+      <Spinner v-else :color="'#000000'" />
     </div>
-    <div v-else-if="weather" class="error-msg"><div>Error retrieving data</div></div>
-    <Spinner v-else :color="'#000000'" />
   </section>
 </template>
 
@@ -62,6 +67,8 @@ export default {
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -73,7 +80,16 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.5em 0;
+  flex: 1;
+  padding: 0.3em;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  flex: 1;
 }
 
 .description {
@@ -84,10 +100,23 @@ export default {
   justify-content: center;
 }
 
+.extra-info-container.hidden {
+  visibility: hidden;
+}
+
 .error-msg {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 40% 1em;
+  flex: 1;
+}
+
+.caret {
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.caret.rotated {
+  transform: rotateZ(180deg);
 }
 </style>

@@ -106,7 +106,6 @@ export default {
 
 .current-wrapper {
   flex-basis: 50%;
-  padding-top: 2em;
 }
 
 .map-wrapper {
