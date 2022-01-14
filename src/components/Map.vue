@@ -4,7 +4,7 @@
       v-if="city && city.coord"
       :center="center"
       :options="{ disableDefaultUI: true, clickableIcons: false }"
-      :zoom="11"
+      :zoom="12"
       ref="map"
     >
       <GMapCluster>
@@ -97,17 +97,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .map-container {
   height: 400px;
   width: 500px;
-}
-.vue-map-container {
-  height: 100%;
-  width: 100%;
-}
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
 
-.gm-style-cc {
-  display: none;
+  .vue-map-container {
+    height: 100%;
+    width: 100%;
+
+    .gm-style-cc {
+      display: none;
+    }
+  }
 }
 </style>

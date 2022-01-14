@@ -1,7 +1,8 @@
 <template>
-  <header><h1>Weather Forecast</h1></header>
-  <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
-  <br />
+  <div class="sticky">
+    <header><h1>Weather Forecast</h1></header>
+    <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
+  </div>
   <div class="main-container">
     <CurrentWeather
       class="current-wrapper"
@@ -10,13 +11,8 @@
     ></CurrentWeather>
     <Map class="map-wrapper" :city="city" @updateLocation="updateCity"></Map>
   </div>
-  <br />
   <WeatherForecast :weather="weather.forecast"></WeatherForecast>
-
-  <br />
   <WeatherHistory :weather="weather.historical"></WeatherHistory>
-
-  <br />
 </template>
 
 <script>
@@ -89,7 +85,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -99,18 +95,20 @@ export default {
   box-sizing: border-box;
 }
 
+h1 {
+  text-shadow: 0 2px 5px lightgray;
+}
+
 .main-container {
   display: flex;
   justify-content: space-around;
-}
 
-.current-wrapper {
-  flex-basis: 30%;
-}
-
-.map-wrapper {
-  align-self: stretch;
-  padding: 0 1em 0 4em;
-  flex-basis: 50%;
+  .current-wrapper {
+    flex-basis: 30%;
+  }
+  .map-wrapper {
+    align-self: stretch;
+    flex-basis: 50%;
+  }
 }
 </style>

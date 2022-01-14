@@ -62,61 +62,61 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .weather-card {
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
-}
 
-.title {
-  border-bottom: 1px solid black;
-}
+  .title {
+    border-bottom: 1px solid black;
+  }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  padding: 0.3em;
-}
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    padding: 0.3em;
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  flex: 1;
-}
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      flex: 1;
 
-.description {
-  text-transform: uppercase;
-  height: 2em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+      .description {
+        text-transform: uppercase;
+        height: 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
 
-.extra-info-container.hidden {
-  visibility: hidden;
-}
+      .extra-info-container.hidden {
+        visibility: hidden;
+      }
 
-.error-msg {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-}
+      .caret {
+        transition: all 0.15s ease;
+        cursor: pointer;
+      }
 
-.caret {
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
+      .caret.rotated {
+        transform: rotateZ(180deg);
+      }
+    }
 
-.caret.rotated {
-  transform: rotateZ(180deg);
+    .error-msg {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex: 1;
+    }
+  }
 }
 </style>

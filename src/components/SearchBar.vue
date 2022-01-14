@@ -59,36 +59,41 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .search-bar-wrapper {
   padding-bottom: 0.6em;
-}
 
-.search-bar {
-  font-size: 18px;
-  text-align: center;
-}
+  .search-bar {
+    font-size: 18px;
+    text-align: center;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.7);
+    outline: none;
+  }
 
-.suggestions-wrapper {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  z-index: 2;
-  width: max-content;
-}
-.city-list {
-  border: 1px solid black;
-  border-radius: 2px;
-  background-color: white;
-}
-.city-option {
-  line-height: 2em;
-  padding: 0 1em;
-}
-.city-option:hover {
-  cursor: pointer;
-  background-color: lightblue;
+  .suggestions-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 2;
+    width: max-content;
+
+    .city-list {
+      border: 1px solid black;
+      border-radius: 2px;
+      background-color: white;
+
+      .city-option {
+        line-height: 2em;
+        padding: 0 1em;
+
+        &:hover {
+          cursor: pointer;
+          background-color: lightblue;
+        }
+      }
+    }
+  }
 }
 </style>

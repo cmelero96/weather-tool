@@ -32,18 +32,14 @@ export default {
 };
 </script>
 
-<style scoped>
-.description {
-  text-transform: uppercase;
-}
-
+<style scoped lang="scss">
 .container {
   display: flex;
   width: 100%;
   justify-content: space-around;
-}
 
-.container > * {
-  flex-basis: 12%;
+  & > * {
+    flex-basis: 12%;
+  }
 }
 </style>
