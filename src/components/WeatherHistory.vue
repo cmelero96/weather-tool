@@ -39,6 +39,7 @@ export default {
 
 .container {
   display: flex;
+  flex-direction: row-reverse;
   width: 70%;
   margin: auto;
   justify-content: space-around;
