@@ -9,16 +9,16 @@
       @blur="onBlur"
     />
     <div class="suggestions-wrapper">
-      <div v-if="focused && searchResults.length" class="city-list">
-        <div
+      <ul v-if="focused && searchResults.length" class="city-list">
+        <li
           v-for="item in searchResults"
           :key="item"
           class="city-option"
           @mousedown="selectCity(item)"
         >
           {{ `${item.name}, ${item.countryCode}` }}
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -83,11 +83,14 @@ export default {
     width: max-content;
 
     .city-list {
+      margin: 0;
+      padding: 0;
       border: 1px solid black;
       border-radius: 2px;
       background-color: white;
 
       .city-option {
+        list-style: none;
         line-height: 2em;
         padding: 0 1em;
         background-color: $primary-color-light;
