@@ -9,9 +9,9 @@
       </div>
       <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
 
-      <div class="temp">Temp: {{ weather.temperature }} ºC</div>
-      <div v-if="weather.minTemperature" class="temp-min">Min: {{ weather.minTemperature }} ºC</div>
-      <div v-if="weather.maxTemperature" class="temp-max">Max: {{ weather.maxTemperature }} ºC</div>
+      <div class="temp">Temp: {{ weather.temperature }}ºC</div>
+      <div v-if="weather.minTemperature" class="temp-min">Min: {{ weather.minTemperature }}ºC</div>
+      <div v-if="weather.maxTemperature" class="temp-max">Max: {{ weather.maxTemperature }}ºC</div>
 
       <section v-if="toggler" class="extra-info-wrapper">
         <header class="extra-info-title">
@@ -26,6 +26,7 @@
         <div v-if="showExtraInfo" class="extra-info-container">
           <slot name="extraInfo" />
         </div>
+        <div v-else class="space-filler"></div>
       </section>
     </div>
     <div v-else-if="weather" class="error-msg"><div>Error retrieving data</div></div>
