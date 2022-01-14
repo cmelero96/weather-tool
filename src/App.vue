@@ -11,8 +11,8 @@
     ></CurrentWeather>
     <Map class="map-wrapper" :city="city" @updateLocation="updateCity"></Map>
   </div>
-  <WeatherForecast :weather="weather.forecast"></WeatherForecast>
-  <WeatherHistory :weather="weather.historical"></WeatherHistory>
+  <WeatherForecast class="forecast-wrapper" :weather="weather.forecast"></WeatherForecast>
+  <WeatherHistory class="history-wrapper" :weather="weather.historical"></WeatherHistory>
 </template>
 
 <script>
@@ -86,6 +86,14 @@ export default {
 </script>
 
 <style lang="scss">
+@import 'utils/variables';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -93,6 +101,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   box-sizing: border-box;
+  min-height: 100vh;
+  background-color: $main-color-light;
+  color: $main-color-text;
 }
 
 .main-header {
@@ -100,7 +111,7 @@ export default {
   height: 7rem;
   top: -3.5rem;
   z-index: 2;
-  background-color: white;
+  background-color: $main-color;
 
   display: flex;
   flex-direction: column;
@@ -109,7 +120,6 @@ export default {
   border-bottom: 1px solid;
 
   h1 {
-    text-shadow: 0 2px 5px lightgray;
     margin: 0;
   }
 }
@@ -117,14 +127,20 @@ export default {
 .main-container {
   display: flex;
   justify-content: space-around;
-  padding-top: 2rem;
+  padding: 2rem 0 1rem 0;
 
   .current-wrapper {
     flex-basis: 30%;
   }
+
   .map-wrapper {
     align-self: stretch;
     flex-basis: 50%;
   }
+}
+
+.forecast-wrapper,
+.history-wrapper {
+  padding-bottom: 1rem;
 }
 </style>

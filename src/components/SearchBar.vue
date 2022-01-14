@@ -60,8 +60,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../utils/variables';
+
 .search-bar-wrapper {
   padding-bottom: 0.6em;
+  color: $secondary-color-text;
 
   .search-bar {
     font-size: 18px;
@@ -87,10 +90,11 @@ export default {
       .city-option {
         line-height: 2em;
         padding: 0 1em;
+        background-color: $secondary-color-light;
 
         &:hover {
           cursor: pointer;
-          background-color: lightblue;
+          background-color: $secondary-color;
         }
       }
     }

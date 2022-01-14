@@ -63,15 +63,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '../utils/variables';
+
 .weather-card {
   border: 1px solid black;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
+  background-color: $primary-color-light;
+  color: $main-color-text;
 
   .title {
     border-bottom: 1px solid black;
+    border-radius: 5px 5px 0 0;
+    background-color: $primary-color;
   }
 
   .container {
