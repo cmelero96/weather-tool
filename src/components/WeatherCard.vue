@@ -135,8 +135,17 @@ export default {
         padding: 0.4em 0;
       }
 
-      .extra-info-container.hidden {
-        visibility: hidden;
+      .extra-info-container {
+        transition: opacity 0.1s linear;
+        opacity: 1;
+
+        &.hidden {
+          opacity: 0;
+
+          @media (max-width: 600px) {
+            display: none;
+          }
+        }
       }
 
       .caret {
