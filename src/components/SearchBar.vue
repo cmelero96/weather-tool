@@ -66,7 +66,6 @@ export default {
 
 .search-bar-wrapper {
   padding-bottom: 0.6em;
-  color: $text-color;
 
   .results-enter-active,
   .results-leave-active {

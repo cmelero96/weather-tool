@@ -1,5 +1,5 @@
 <template>
-  <WeatherCard v-if="city" :weather="weather" toggler>
+  <WeatherCard v-if="city" :weather="weather" toggler largeImage>
     <template v-slot:title>
       <h2>{{ city.name }}</h2>
     </template>

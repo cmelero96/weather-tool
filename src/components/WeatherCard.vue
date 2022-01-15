@@ -8,7 +8,7 @@
         <div class="description">
           <div>{{ weather.description }}</div>
         </div>
-        <img class="icon" :src="getSrc(weather.icon)" :srcset="getSrcSet(weather.icon)" />
+        <img :class="`icon ${largeImage && 'large'}`" :src="getSrc(weather.icon, largeImage)" />
 
         <div class="temp">Temp: {{ weather.temperature }}ºC</div>
         <div v-if="weather.minTemperature" class="temp-min">
@@ -50,6 +50,7 @@ export default {
   props: {
     weather: { type: Object, required: true },
     toggler: { type: Boolean, default: false },
+    largeImage: { type: Boolean, default: false },
   },
   setup(props) {
     const { getSrc, getSrcSet } = iconGetters;
@@ -72,12 +73,12 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: $primary-color-light;
-  color: $text-color;
 
   .title {
     border-bottom: 1px solid black;
     border-radius: 5px 5px 0 0;
     background-color: $primary-color;
+    color: $text-color-light;
   }
 
   .container {
@@ -97,10 +98,19 @@ export default {
 
       .description {
         text-transform: uppercase;
+        font-size: 15px;
         height: 2em;
         display: flex;
         flex-direction: column;
         justify-content: center;
+      }
+
+      .icon.large {
+        height: 100px;
+      }
+
+      .extra-info-title {
+        padding: 0.4em 0;
       }
 
       .extra-info-container.hidden {

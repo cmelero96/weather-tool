@@ -103,7 +103,7 @@ body {
   box-sizing: border-box;
   min-height: 100vh;
   background-color: $background-color-light;
-  color: $text-color;
+  color: $text-color-dark;
 }
 
 .main-header {
@@ -117,7 +117,7 @@ body {
   flex-direction: column;
   justify-content: space-around;
 
-  border-bottom: 1px solid;
+  border-bottom: 1px solid black;
 
   h1 {
     margin: 0;

@@ -1,6 +1,6 @@
 // Retrieve the weather icons from OpenWeatherMap page.
 export const iconGetters = {
-  getSrc: (icon) => `https://openweathermap.org/img/wn/${icon}.png`,
+  getSrc: (icon, large) => `https://openweathermap.org/img/wn/${icon}${large ? '@2x' : ''}.png`,
   getSrcSet: (icon) =>
     `https://openweathermap.org/img/wn/${icon}.png,
      https://openweathermap.org/img/wn/${icon}@2x.png,
