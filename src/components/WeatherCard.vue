@@ -10,12 +10,20 @@
         </div>
         <img :class="`icon ${largeImage && 'large'}`" :src="getSrc(weather.icon, largeImage)" />
 
-        <div class="temp">Temp: {{ weather.temperature }}ºC</div>
-        <div v-if="weather.minTemperature" class="temp-min">
-          Min: {{ weather.minTemperature }}ºC
-        </div>
-        <div v-if="weather.maxTemperature" class="temp-max">
-          Max: {{ weather.maxTemperature }}ºC
+        <div class="temp">{{ weather.temperature }}ºC</div>
+        <div
+          v-if="
+            weather.maxTemperature &&
+            weather.minTemperature &&
+            weather.maxTemperature !== weather.minTemperature
+          "
+        >
+          <div v-if="weather.minTemperature" class="temp-min">
+            Min: {{ weather.minTemperature }}ºC
+          </div>
+          <div v-if="weather.maxTemperature" class="temp-max">
+            Max: {{ weather.maxTemperature }}ºC
+          </div>
         </div>
 
         <section v-if="toggler" class="extra-info-wrapper">
@@ -52,7 +60,7 @@ export default {
     toggler: { type: Boolean, default: false },
     largeImage: { type: Boolean, default: false },
   },
-  setup(props) {
+  setup() {
     const { getSrc, getSrcSet } = iconGetters;
 
     const showExtraInfo = ref(false);
@@ -73,12 +81,17 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: $primary-color-light;
+  white-space: nowrap;
+  overflow: hidden;
 
   .title {
+    height: fit-content;
     border-bottom: 1px solid black;
     border-radius: 5px 5px 0 0;
     background-color: $primary-color;
     color: $text-color-light;
+    white-space: normal;
+    padding: 0.5em;
   }
 
   .container {
@@ -96,6 +109,10 @@ export default {
       justify-content: space-evenly;
       flex: 1;
 
+      @media (max-width: 1080px) {
+        font-size: 14px;
+      }
+
       .description {
         text-transform: uppercase;
         font-size: 15px;
@@ -103,6 +120,11 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        white-space: normal;
+
+        @media (max-width: 1080px) {
+          font-size: 12px;
+        }
       }
 
       .icon.large {
@@ -132,6 +154,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       flex: 1;
+      white-space: normal;
     }
   }
 }

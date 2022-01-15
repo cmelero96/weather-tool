@@ -1,7 +1,9 @@
 <template>
   <WeatherCard v-if="city" :weather="weather" toggler largeImage>
     <template v-slot:title>
-      <h2>{{ city.name }}</h2>
+      <div class="title-wrapper">
+        <h2>{{ city.name }}</h2>
+      </div>
     </template>
     <template v-slot:extraInfo>
       <div class="pressure">Pressure: {{ weather.pressure }} hPa</div>
@@ -31,4 +33,20 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  h2 {
+    height: 2em;
+    margin: 0;
+
+    @media (max-width: 600px) {
+      height: 2em;
+    }
+  }
+}
+</style>

@@ -41,5 +41,21 @@ export default {
   & > * {
     flex-basis: 12%;
   }
+
+  h4 {
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: normal;
+    width: 300px;
+    margin: auto;
+
+    & > * {
+      margin: 1em 0;
+    }
+  }
 }
 </style>

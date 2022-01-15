@@ -134,8 +134,19 @@ body {
   }
 
   .map-wrapper {
-    align-self: stretch;
     flex-basis: 50%;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    .map-wrapper {
+      margin-top: 1rem;
+      flex-basis: unset;
+      width: 90%;
+    }
   }
 }
 
