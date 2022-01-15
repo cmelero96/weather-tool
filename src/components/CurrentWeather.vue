@@ -9,8 +9,8 @@
       <div class="pressure">Pressure: {{ weather.pressure }} hPa</div>
       <div class="humidity">Humidity: {{ weather.humidity }}%</div>
       <div class="wind-speed">Wind speed: {{ weather.windSpeed }}m/s</div>
-      <div class="sunrise">Sunrise: {{ formatDate(weather.sunrise) }}</div>
-      <div class="sunset">Sunset: {{ formatDate(weather.sunset) }}</div>
+      <div class="sunrise">Sunrise at {{ formatDate(weather.sunrise) }}</div>
+      <div class="sunset">Sunset at {{ formatDate(weather.sunset) }}</div>
     </template>
   </WeatherCard>
 </template>
