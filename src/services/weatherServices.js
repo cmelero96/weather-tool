@@ -48,8 +48,8 @@ export const getForecast = async ({ lat, lon }) => {
       description: data.weather[0].description,
       icon: data.weather[0].icon,
       temperature: data.temp.day,
-      minTemperature: data.temp.day,
-      maxTemperature: data.temp.day,
+      minTemperature: data.temp.min,
+      maxTemperature: data.temp.max,
     }))
     .slice(-DAYS_IN_FORECAST); // An extra element may be present; that means position 0 is forecast for today
 };
