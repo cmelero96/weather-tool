@@ -7,3 +7,14 @@ $primary-color-highlight: #d2e4ff;
 
 $text-color-light: rgb(218, 218, 218);
 $text-color-dark: #000000;
+
+$shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+
+@mixin rounded-card($border: false) {
+  border-radius: 5px;
+  box-shadow: $shadow;
+
+  @if $border {
+    border: 1px solid $text-color-dark;
+  }
+}

@@ -81,9 +81,9 @@ export default {
   }
 
   .search-bar {
+    @include rounded-card;
     font-size: 18px;
     text-align: center;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.7);
     outline: none;
   }
 

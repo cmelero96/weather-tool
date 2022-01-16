@@ -146,8 +146,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
-  border-bottom: 1px solid black;
+  box-shadow: $shadow;
 
   h1 {
     margin: 0;

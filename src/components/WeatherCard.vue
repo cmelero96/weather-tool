@@ -71,9 +71,7 @@ export default {
 @import '../utils/variables';
 
 .weather-card {
-  border: 1px solid black;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7);
+  @include rounded-card;
   display: flex;
   flex-direction: column;
   background-color: $primary-color-light;
