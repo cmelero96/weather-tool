@@ -1,5 +1,5 @@
 import { debouncedWatch } from '@vueuse/core';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import Fuse from 'fuse.js';
 
 const SEARCH_OPTIONS = {
