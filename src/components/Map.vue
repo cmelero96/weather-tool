@@ -48,7 +48,8 @@ export default {
         if (!markers.value.length || markers.value.at(-1).id !== city.id) {
           markers.value.push(city);
         }
-      }
+      },
+      { immediate: true }
     );
 
     // Inject two custom buttons on the map to center the view and remove old markers
