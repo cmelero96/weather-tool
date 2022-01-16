@@ -20,7 +20,7 @@ export const createButton = (title, tooltip, onClick) => {
   return button;
 };
 
-const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const WEEKDAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 // Returns the ordered amount of days starting from provided date, either
 // towards the future (amountOfDays > 0) or from the past (< 0)

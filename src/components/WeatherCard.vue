@@ -14,18 +14,15 @@
 
         <div class="temp">{{ weather.temperature }}ºC</div>
         <div
+          class="temp-min-max"
           v-if="
             weather.maxTemperature &&
             weather.minTemperature &&
             weather.maxTemperature !== weather.minTemperature
           "
         >
-          <div v-if="weather.minTemperature" class="temp-min">
-            Min: {{ weather.minTemperature }}ºC
-          </div>
-          <div v-if="weather.maxTemperature" class="temp-max">
-            Max: {{ weather.maxTemperature }}ºC
-          </div>
+          <div class="temp-min">Min: {{ weather.minTemperature }}ºC</div>
+          <div class="temp-max">Max: {{ weather.maxTemperature }}ºC</div>
         </div>
 
         <section v-if="toggler" class="extra-info-wrapper">
@@ -93,6 +90,10 @@ export default {
     color: $text-color-light;
     white-space: normal;
     padding: 0.5em;
+
+    @media (max-width: 1080px) {
+      font-size: 14px;
+    }
   }
 
   .container {
@@ -104,6 +105,7 @@ export default {
     padding: 0.3em;
 
     .content {
+      width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -112,6 +114,11 @@ export default {
 
       @media (max-width: 1080px) {
         font-size: 14px;
+      }
+
+      @media (max-width: 600px) {
+        font-size: 18px;
+        padding-bottom: 0.5em;
       }
 
       .description {
@@ -126,10 +133,23 @@ export default {
         @media (max-width: 1080px) {
           font-size: 12px;
         }
+
+        @media (max-width: 720px) {
+          font-size: 18px;
+        }
       }
 
       .icon.large {
         height: 100px;
+      }
+
+      .temp-min-max {
+        @media (max-width: 720px) {
+          width: 100%;
+          display: flex;
+          justify-content: space-evenly;
+          padding-top: 0.4em;
+        }
       }
 
       .extra-info-title {
