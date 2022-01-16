@@ -89,7 +89,7 @@ const callService = async (url) => {
     `https://api.openweathermap.org/data/2.5/${url}&units=metric&appid=${API_KEY}`
   );
 
-  if (!!response.ok) {
+  if (!response.ok) {
     throw new Error('Could not get data from the API: Status code ' + response.status);
   }
 
