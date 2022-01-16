@@ -22,6 +22,8 @@ export const createButton = (title, tooltip, onClick) => {
 
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+// Returns the ordered amount of days starting from provided date, either
+// towards the future (amountOfDays > 0) or from the past (< 0)
 export const getWeekdays = (dateNow, amountOfDays) => {
   let dayNumber = dateNow.getDay();
   const weekdays = [];
