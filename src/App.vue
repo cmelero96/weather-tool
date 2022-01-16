@@ -4,12 +4,7 @@
     <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
   </div>
   <div v-if="city.id" class="main-container">
-    <CurrentWeather
-      class="current-wrapper"
-      :city="city"
-      :weather="weather.current"
-      :isLoading="loadingData.current"
-    ></CurrentWeather>
+    <CurrentWeather class="current-wrapper" :city="city"></CurrentWeather>
     <Map
       v-show="!loadingData.current"
       class="map-wrapper"
@@ -17,32 +12,21 @@
       @updateLocation="updateCity"
     ></Map>
   </div>
-  <WeatherForecast
-    v-if="city.id"
-    class="forecast-wrapper"
-    :weather="weather.forecast"
-    :isLoading="loadingData.forecast"
-  ></WeatherForecast>
-  <WeatherHistory
-    v-if="city.id"
-    class="history-wrapper"
-    :weather="weather.historical"
-    :isLoading="loadingData.historical"
-  ></WeatherHistory>
+  <WeatherForecast v-if="city.id" :city="city" class="forecast-wrapper"></WeatherForecast>
+  <WeatherHistory v-if="city.id" :city="city" class="history-wrapper"></WeatherHistory>
   <div v-if="!city.id" class="initial-prompt">
     Allow Location permissions in your browser, or search any city in the searchbar.
   </div>
 </template>
 
 <script>
-import { getCurrentWeather, getForecast, getWeatherHistory } from './services/weatherServices';
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';
+import Map from './components/Map.vue';
 import CurrentWeather from './components/CurrentWeather.vue';
 import WeatherForecast from './components/WeatherForecast.vue';
 import WeatherHistory from './components/WeatherHistory.vue';
-import Map from './components/Map.vue';
 
 export default {
   components: { SearchBar, CurrentWeather, WeatherForecast, WeatherHistory, Map },
@@ -57,10 +41,6 @@ export default {
       searchBar.value.searchTerm = selectedCity.name;
     };
 
-    watch(city, (newCity) => {
-      updateWeather(newCity.coord);
-    });
-
     onMounted(() => {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((data) => {
@@ -73,27 +53,6 @@ export default {
         });
       }
     });
-
-    const updateWeather = (coordinates) => {
-      loadingData.value = {
-        current: true,
-        forecast: true,
-        historical: true,
-      };
-
-      getCurrentWeather(coordinates).then((data) => {
-        loadingData.value.current = false;
-        weather.value.current = data;
-      });
-      getForecast(coordinates).then((data) => {
-        loadingData.value.forecast = false;
-        weather.value.forecast = data;
-      });
-      getWeatherHistory(coordinates).then((data) => {
-        loadingData.value.historical = false;
-        weather.value.historical = data;
-      });
-    };
 
     return { city, weather, updateCity, searchBar, loadingData };
   },

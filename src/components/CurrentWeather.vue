@@ -1,6 +1,5 @@
 <template>
-  <Spinner v-if="isLoading" :color="'#000000'" />
-  <WeatherCard v-else :weather="weather" toggler largeImage>
+  <WeatherCard :weather="weather" :isLoading="isLoading" :error="error" toggler largeImage>
     <template v-slot:title>
       <div class="title-wrapper">
         <h2>{{ city.name }}</h2>
@@ -17,21 +16,22 @@
 </template>
 
 <script>
+import useWatchCity from '../composables/useWatchCity';
+import { getCurrentWeather } from '../services/weatherServices';
 import WeatherCard from './WeatherCard.vue';
-import Spinner from 'vue-spinner/src/ClipLoader.vue';
 
 export default {
-  components: { WeatherCard, Spinner },
+  components: { WeatherCard },
   props: {
     city: { type: Object, required: true },
-    weather: { type: Object, required: true },
-    isLoading: { type: Boolean, default: false },
   },
-  setup() {
+  setup(props) {
+    const { weather, isLoading, error } = useWatchCity(props.city, getCurrentWeather);
+
     const formatDate = (date) =>
       new Date(date).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
 
-    return { formatDate };
+    return { weather, isLoading, error, formatDate };
   },
 };
 </script>

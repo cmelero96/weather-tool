@@ -40,9 +40,6 @@ export const getForecast = async ({ lat, lon }) => {
     `onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts`
   );
 
-  // The data for all the days comes from the same API call, so if it fails we get no data
-  if (!response) return Array(DAYS_IN_FORECAST).fill();
-
   return response.daily
     .map((data) => ({
       description: data.weather[0].description,
@@ -80,15 +77,11 @@ export const getWeatherHistory = async ({ lat, lon }) => {
   );
 
   // If the call for a certain day failed, return undefined for that day, but not for the rest
-  return response.map((data) => {
-    if (!data.value) return;
-
-    return {
-      description: data.value.current.weather[0].description,
-      icon: data.value.current.weather[0].icon,
-      temperature: data.value.current.temp,
-    };
-  });
+  return response.map((data) => ({
+    description: data.value.current.weather[0].description,
+    icon: data.value.current.weather[0].icon,
+    temperature: data.value.current.temp,
+  }));
 };
 
 const callService = async (url) => {
@@ -96,9 +89,8 @@ const callService = async (url) => {
     `https://api.openweathermap.org/data/2.5/${url}&units=metric&appid=${API_KEY}`
   );
 
-  if (!response.ok) {
-    console.log('Error fetching data from the API');
-    return;
+  if (!!response.ok) {
+    throw new Error('Could not get data from the API: Status code ' + response.status);
   }
 
   return await response.json();

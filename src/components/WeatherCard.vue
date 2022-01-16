@@ -4,7 +4,9 @@
       <slot name="title" />
     </header>
     <div class="container">
-      <div class="content" v-if="weather && weather.temperature">
+      <ErrorMessage v-if="error">Error retrieving data</ErrorMessage>
+      <Spinner v-else-if="isLoading" :color="'#000000'" />
+      <div class="content" v-else>
         <div class="description">
           <div>{{ weather.description }}</div>
         </div>
@@ -41,7 +43,6 @@
           </div>
         </section>
       </div>
-      <div v-else-if="weather" class="error-msg">Error retrieving data</div>
     </div>
   </section>
 </template>
@@ -50,9 +51,15 @@
 import { ref } from 'vue';
 import { iconGetters } from '../utils';
 
+import Spinner from 'vue-spinner/src/ClipLoader.vue';
+import ErrorMessage from './ErrorMessage.vue';
+
 export default {
+  components: { Spinner, ErrorMessage },
   props: {
     weather: { type: Object, required: true },
+    isLoading: { type: Boolean, default: true },
+    error: { type: Boolean, default: false },
     toggler: { type: Boolean, default: false },
     largeImage: { type: Boolean, default: false },
   },
@@ -150,14 +157,6 @@ export default {
       .caret.rotated {
         transform: rotateZ(180deg);
       }
-    }
-
-    .error-msg {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
-      white-space: normal;
     }
   }
 }
