@@ -12,8 +12,6 @@ const DAYS_IN_FORECAST = 7;
 export const getCurrentWeather = async ({ lat, lon }) => {
   const response = await callService(`weather?lat=${lat}&lon=${lon}`);
 
-  if (!response) return;
-
   return {
     description: response.weather[0].description,
     icon: response.weather[0].icon,
