@@ -22,10 +22,6 @@ export default (city, callback) => {
         })
         .finally(() => {
           isLoading.value = false;
-
-          console.log(weather.value);
-          console.log(error.value);
-          console.log(isLoading.value);
         });
     },
     { immediate: true }
