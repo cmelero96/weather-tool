@@ -3,16 +3,14 @@
     <header><h1>Weather Forecast</h1></header>
     <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
   </div>
-  <div class="main-container">
+  <div v-if="city.id" class="main-container">
     <CurrentWeather
-      v-if="city.id"
       class="current-wrapper"
       :city="city"
       :weather="weather.current"
       :isLoading="loadingData.current"
     ></CurrentWeather>
     <Map
-      v-if="city.id"
       v-show="!loadingData.current"
       class="map-wrapper"
       :city="city"
