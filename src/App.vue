@@ -30,7 +30,7 @@
     :isLoading="loadingData.historical"
   ></WeatherHistory>
   <div class="initial-prompt" v-if="!city.id">
-    To start, allow Location permissions in your browser, or search any city in the searchbar!
+    Allow Location permissions in your browser, or search any city in the searchbar.
   </div>
 </template>
 
