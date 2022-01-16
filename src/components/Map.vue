@@ -115,8 +115,13 @@ export default {
       border-radius: inherit;
     }
 
-    .gm-style-cc {
-      display: none;
+    .gm-style {
+      button {
+        margin: 0.2em;
+      }
+      .gm-style-cc {
+        display: none;
+      }
     }
   }
 }

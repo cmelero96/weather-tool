@@ -44,12 +44,7 @@ export default {
   flex-wrap: nowrap;
 
   h2 {
-    height: 2em;
     margin: 0;
-
-    @media (max-width: 600px) {
-      height: 2em;
-    }
   }
 }
 </style>
