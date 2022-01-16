@@ -118,6 +118,7 @@ export default {
     .gm-style {
       button {
         margin: 0.2em;
+        font-size: 14px;
       }
       .gm-style-cc {
         display: none;
