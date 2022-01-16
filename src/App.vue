@@ -29,20 +29,13 @@
     :weather="weather.historical"
     :isLoading="loadingData.historical"
   ></WeatherHistory>
-  <div class="initial-prompt" v-if="!city.id">
+  <div v-if="!city.id" class="initial-prompt">
     Allow Location permissions in your browser, or search any city in the searchbar.
   </div>
 </template>
 
 <script>
 import { getCurrentWeather, getForecast, getWeatherHistory } from './services/weatherServices';
-import {
-  promiseMock,
-  mockCityData,
-  mockCurrent,
-  mockForecast,
-  mockHistorical,
-} from './utils/mockData';
 import { ref, onMounted, watch } from 'vue';
 
 import SearchBar from './components/SearchBar.vue';

@@ -1,7 +1,7 @@
 <template>
   <section class="weather-forecast">
     <header><h3>Forecast</h3></header>
-    <div class="container" v-if="!isLoading">
+    <div v-if="!isLoading" class="container">
       <WeatherCard v-for="(day, n) in weather" :key="day" :weather="day">
         <template v-slot:title>
           <h4>{{ n === 0 ? 'Tomorrow' : weekdays[n] }}</h4>

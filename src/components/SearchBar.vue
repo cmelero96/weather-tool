@@ -9,7 +9,7 @@
       @blur="onBlur"
     />
     <transition name="results">
-      <div class="suggestions-wrapper" v-if="focused && searchResults.length">
+      <div v-if="focused && searchResults.length" class="suggestions-wrapper">
         <ul class="city-list">
           <li
             v-for="item in searchResults"

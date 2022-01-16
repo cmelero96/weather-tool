@@ -1,7 +1,7 @@
 <template>
   <section class="weather-history">
     <header><h3>Historical data</h3></header>
-    <div class="container" v-if="!isLoading">
+    <div v-if="!isLoading" class="container">
       <WeatherCard v-for="(day, n) in weather" :key="day" :weather="day">
         <template v-slot:title>
           <h4>{{ n === 0 ? 'Yesterday' : weekdays[n] }}</h4>
