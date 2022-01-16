@@ -3,16 +3,35 @@
     <header><h1>Weather Forecast</h1></header>
     <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
   </div>
-  <div class="main-container">
+  <div class="main-container" v-if="city.id">
     <CurrentWeather
       class="current-wrapper"
       :city="city"
       :weather="weather.current"
+      :isLoading="loadingData.current"
     ></CurrentWeather>
-    <Map class="map-wrapper" :city="city" @updateLocation="updateCity"></Map>
+    <Map
+      v-show="!loadingData.current"
+      class="map-wrapper"
+      :city="city"
+      @updateLocation="updateCity"
+    ></Map>
   </div>
-  <WeatherForecast class="forecast-wrapper" :weather="weather.forecast"></WeatherForecast>
-  <WeatherHistory class="history-wrapper" :weather="weather.historical"></WeatherHistory>
+  <WeatherForecast
+    v-if="city.id"
+    class="forecast-wrapper"
+    :weather="weather.forecast"
+    :isLoading="loadingData.forecast"
+  ></WeatherForecast>
+  <WeatherHistory
+    v-if="city.id"
+    class="history-wrapper"
+    :weather="weather.historical"
+    :isLoading="loadingData.historical"
+  ></WeatherHistory>
+  <div class="initial-prompt" v-if="!city.id">
+    To start, allow Location permissions in your browser, or search any city in the searchbar!
+  </div>
 </template>
 
 <script>
@@ -35,7 +54,7 @@ import Map from './components/Map.vue';
 export default {
   components: { SearchBar, CurrentWeather, WeatherForecast, WeatherHistory, Map },
   setup() {
-    const isLoading = ref(true);
+    const loadingData = ref({});
     const city = ref({});
     const weather = ref({});
     const searchBar = ref();
@@ -50,8 +69,6 @@ export default {
     });
 
     onMounted(() => {
-      const initialData = {};
-
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((data) => {
           city.value = {
@@ -61,26 +78,39 @@ export default {
             coord: { lat: data.coords.latitude, lon: data.coords.longitude },
           };
         });
-      } else {
-        city.value = mockCityData;
       }
     });
 
     // Mocked functionality
-    const updateWeather = async () => {
-      promiseMock(mockCurrent, 1000).then((data) => (weather.value.current = data));
-      promiseMock(mockForecast, 4000).then((data) => (weather.value.forecast = data));
-      promiseMock(mockHistorical, 2000).then((data) => (weather.value.historical = data));
+    const updateWeather = () => {
+      loadingData.value = {
+        current: true,
+        forecast: true,
+        historical: true,
+      };
+
+      promiseMock(mockCurrent, 1000).then((data) => {
+        loadingData.value.current = false;
+        weather.value.current = data;
+      });
+      promiseMock(mockForecast, 4000).then((data) => {
+        loadingData.value.forecast = false;
+        weather.value.forecast = data;
+      });
+      promiseMock(mockHistorical, 2000).then((data) => {
+        loadingData.value.historical = false;
+        weather.value.historical = data;
+      });
     };
 
     // TODO: Uncomment this and remove mocked functionality above
-    // const updateWeather = async (coordinates) => {
+    // const updateWeather = (coordinates) => {
     //  getCurrentWeather(coordinates).then((data) => (weather.value.current = data));
     //  getForecast(coordinates).then((data) => (weather.value.forecast = data));
     //  getWeatherHistory(coordinates).then((data) => (weather.value.historical = data));
     // };
 
-    return { city, weather, updateCity, searchBar, isLoading };
+    return { city, weather, updateCity, searchBar, loadingData };
   },
 };
 </script>
@@ -153,5 +183,10 @@ body {
 .forecast-wrapper,
 .history-wrapper {
   padding-bottom: 1rem;
+}
+
+.initial-prompt {
+  padding-top: 4rem;
+  font-weight: bold;
 }
 </style>

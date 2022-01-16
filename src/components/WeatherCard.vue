@@ -42,7 +42,6 @@
         </section>
       </div>
       <div v-else-if="weather" class="error-msg">Error retrieving data</div>
-      <Spinner v-else :color="'#000000'" />
     </div>
   </section>
 </template>
@@ -51,10 +50,7 @@
 import { ref } from 'vue';
 import { iconGetters } from '../utils';
 
-import Spinner from 'vue-spinner/src/ClipLoader.vue';
-
 export default {
-  components: { Spinner },
   props: {
     weather: { type: Object, required: true },
     toggler: { type: Boolean, default: false },

@@ -1,14 +1,14 @@
 <template>
   <section class="weather-forecast">
     <header><h3>Forecast</h3></header>
-    <div class="container">
+    <div class="container" v-if="!isLoading">
       <WeatherCard v-for="(day, n) in weather" :key="day" :weather="day">
         <template v-slot:title>
           <h4>{{ n === 0 ? 'Tomorrow' : weekdays[n] }}</h4>
         </template>
       </WeatherCard>
     </div>
-    <Spinner v-if="!weather" :color="'#000000'" />
+    <Spinner v-else :color="'#000000'" />
   </section>
 </template>
 
@@ -23,6 +23,7 @@ export default {
   components: { WeatherCard, Spinner },
   props: {
     weather: { type: Object, required: true },
+    isLoading: { type: Boolean, default: false },
   },
   setup(props) {
     const weekdays = computed(() => getWeekdays(new Date(), props.weather.length));
