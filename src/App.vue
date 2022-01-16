@@ -3,14 +3,16 @@
     <header><h1>Weather Forecast</h1></header>
     <SearchBar @selectCity="updateCity" ref="searchBar"></SearchBar>
   </div>
-  <div class="main-container" v-if="city.id">
+  <div class="main-container">
     <CurrentWeather
+      v-if="city.id"
       class="current-wrapper"
       :city="city"
       :weather="weather.current"
       :isLoading="loadingData.current"
     ></CurrentWeather>
     <Map
+      v-if="city.id"
       v-show="!loadingData.current"
       class="map-wrapper"
       :city="city"
@@ -81,34 +83,26 @@ export default {
       }
     });
 
-    // Mocked functionality
-    const updateWeather = () => {
+    const updateWeather = (coordinates) => {
       loadingData.value = {
         current: true,
         forecast: true,
         historical: true,
       };
 
-      promiseMock(mockCurrent, 1000).then((data) => {
+      getCurrentWeather(coordinates).then((data) => {
         loadingData.value.current = false;
         weather.value.current = data;
       });
-      promiseMock(mockForecast, 4000).then((data) => {
+      getForecast(coordinates).then((data) => {
         loadingData.value.forecast = false;
         weather.value.forecast = data;
       });
-      promiseMock(mockHistorical, 2000).then((data) => {
+      getWeatherHistory(coordinates).then((data) => {
         loadingData.value.historical = false;
         weather.value.historical = data;
       });
     };
-
-    // TODO: Uncomment this and remove mocked functionality above
-    // const updateWeather = (coordinates) => {
-    //  getCurrentWeather(coordinates).then((data) => (weather.value.current = data));
-    //  getForecast(coordinates).then((data) => (weather.value.forecast = data));
-    //  getWeatherHistory(coordinates).then((data) => (weather.value.historical = data));
-    // };
 
     return { city, weather, updateCity, searchBar, loadingData };
   },
@@ -157,6 +151,7 @@ body {
   display: flex;
   justify-content: space-around;
   padding: 2rem 0 1rem 0;
+  min-height: 400px;
 
   .current-wrapper {
     flex-basis: 30%;
