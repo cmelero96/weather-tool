@@ -55,7 +55,7 @@ export default {
     flex-direction: column;
     justify-content: space-around;
     align-items: normal;
-    width: 350px;
+    max-width: 350px;
     margin: auto;
 
     & > * {
